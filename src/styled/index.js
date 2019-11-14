@@ -50,6 +50,7 @@ export const Button = styled.button`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  font-family: 'PT Sans', sans-serif;
 
   transition: all 0.3s ease-in-out;
 
