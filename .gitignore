@@ -26,3 +26,5 @@ yarn-error.log*
 firebase.json
 .firebase
 .firebaserc
+src/fb_config.js
+.env

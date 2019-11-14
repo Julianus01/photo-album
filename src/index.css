@@ -14,6 +14,10 @@ body {
   height: 100%;
 }
 
+.ReactModal__Overlay {
+  background-color: transparent !important;
+}
+
 /* code {
   font-family: 'Montserrat', sans-serif;
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
