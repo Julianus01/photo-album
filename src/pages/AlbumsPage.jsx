@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { Div, Title, Button } from 'styled'
+import { Div, Title, Button, Input } from 'styled'
 import styled from 'styled-components'
 import AlbumEndpoints from 'api/AlbumEndpoints'
+import Modal from 'shared/Modal'
 
 const AlbumsPage = () => {
+  const [isOpen, setIsOpen] = useState(false)
   const [loading, setLoading] = useState(true)
   const [albums, setAlbums] = useState([])
+  const [newAlbumName, setNewAlbumName] = useState('')
 
   useEffect(() => {
     AlbumEndpoints.getAlbums().then(result => {
@@ -16,12 +19,28 @@ const AlbumsPage = () => {
 
   return (
     <Page>
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        <ModalContent>
+          <Input
+            variant='secondary'
+            value={newAlbumName}
+            onChange={({ target: { value } }) => setNewAlbumName(value)}
+            autoFocus
+            disabled={loading}
+            placeholder='Album name'
+          />
+          <Button disabled={newAlbumName.length < 3} style={{ marginLeft: 'auto', width: 140 }}>
+            add
+          </Button>
+        </ModalContent>
+      </Modal>
+
       <Container>
         <Header>
           <Title style={{ marginBottom: 0 }}>My albums</Title>
 
           <Actions>
-            <Button>create</Button>
+            <Button onClick={() => setIsOpen(true)}>create</Button>
           </Actions>
         </Header>
 
@@ -52,7 +71,6 @@ const Page = styled(Div)`
   flex-direction: column;
   margin: 0 auto;
   width: 100%;
-  overflow: auto;
 `
 
 const Container = styled(Div)`
@@ -78,4 +96,8 @@ const Content = styled(Div)`
   grid-template-columns: 1fr 1fr;
   grid-auto-rows: 500px;
   grid-gap: 20px;
+`
+
+const ModalContent = styled(Div).attrs({ box: true })`
+  display: flex;
 `

@@ -1,3 +1,4 @@
+import React from 'react'
 import styled, { css } from 'styled-components'
 
 export const Div = styled.div`
@@ -37,14 +38,57 @@ export const Button = styled.button`
   font-weight: bold;
   margin-top: 0;
   transition: transform 0.15s ease-in-out;
-  padding: 12px;
+  padding: 14px 20px;
   width: 200px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
 
-  :hover {
-    transform: scale(1.05);
+  transition: all 0.3s ease-in-out;
+
+  ${({ disabled, theme }) =>
+    disabled &&
+    css`
+      background-color: ${theme.disabled};
+      box-shadow: none;
+    `}
+`
+
+const InputContainer = styled.div`
+  display: flex;
+  align-items: center;
+
+  ${({ variant, theme }) =>
+    variant === 'secondary' &&
+    css`
+      background-color: ${theme.grey_light};
+      padding: 3px 20px;
+      border-radius: 15px;
+    `}
+`
+
+const TextInput = styled.input`
+  border: 0;
+  font-weight: bold;
+  background-color: transparent;
+  font-size: 16px;
+  color: ${({ theme }) => theme.text.primary};
+  outline: none;
+  border-radius: 10px;
+
+  ::placeholder {
+    color: ${({ theme }) => theme.placeholder};
+  }
+
+  &:disabled {
+    background-color: transparent;
   }
 `
+
+export const Input = ({ icon, style, inputStyle, variant, ...restProps }) => (
+  <InputContainer variant={variant} style={style}>
+    {icon}
+    <TextInput variant={variant} style={inputStyle} {...restProps} />
+  </InputContainer>
+)

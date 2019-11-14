@@ -19,9 +19,11 @@ export default App
 
 const Page = styled(Div)`
   height: 100%;
-  width: 100%;
+  width: fill-available;
   display: flex;
   flex-direction: column;
+  padding-left: 20px;
+  padding-right: 20px;
 `
 
 const Content = styled(Div)`

@@ -26,12 +26,10 @@ export default Navbar
 const Container = styled(Div)`
   max-width: 1000px;
   width: 100%;
-  padding: 20px;
   margin: 0 auto;
   height: 100px;
   display: flex;
   align-items: center;
-  justify-content: center;
 `
 
 const IconContainer = styled(Div)`
