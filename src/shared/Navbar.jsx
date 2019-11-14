@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Div } from 'styled'
+import { Div, Text } from 'styled'
 import styled from 'styled-components'
 import ThemeContext from 'context/themeContext'
 import { Sun, Moon } from 'react-feather'
@@ -12,7 +12,8 @@ const Navbar = () => {
 
   return (
     <Container>
-      Navbar here
+      <Text style={{ fontWeight: 'bold' }}>albump.</Text>
+
       <IconContainer onClick={() => triggerTheme()} style={{ padding: 8 }}>
         {theme.name === 'light' ? <Sun /> : <Moon />}
       </IconContainer>

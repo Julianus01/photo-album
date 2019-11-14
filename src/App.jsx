@@ -2,18 +2,15 @@ import React from 'react'
 import { Div } from 'styled'
 import styled from 'styled-components'
 import { Navbar } from 'shared'
+import AlbumsPage from './pages/AlbumsPage'
 
 const App = () => {
   return (
-    // <Div>
-    //   <Div>Hello</Div>
-    //   <Div>
-    //     <button onClick={() => triggerTheme()}>trigger</button>
-    //   </Div>
-    // </Div>
     <Page>
       <Navbar />
-      <Content>Hello there</Content>
+      <Content>
+        <AlbumsPage />
+      </Content>
     </Page>
   )
 }
@@ -32,5 +29,6 @@ const Content = styled(Div)`
   display: flex;
   flex-direction: column;
   max-width: 1000px;
+  width: 100%;
   margin: 0 auto;
 `
