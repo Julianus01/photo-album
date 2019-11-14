@@ -11,11 +11,17 @@ body {
 html,
 #root,
 body {
+  min-height: 100vh;
   height: 100%;
 }
 
 .ReactModal__Overlay {
   background-color: transparent !important;
+}
+
+.ReactModal__Body--open,
+.ReactModal__Html--open {
+  overflow: hidden;
 }
 
 /* code {

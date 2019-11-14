@@ -42,11 +42,7 @@ const AlbumsPage = () => {
           {loading ? null : !albums.length ? (
             <div>No albums</div>
           ) : (
-            albums.map(album => {
-              console.log('here')
-              console.log(album)
-              return <Album key={album.id} album={album} />
-            })
+            albums.map(album => <Album style={{ marginBottom: 60 }} key={album.id} album={album} />)
           )}
         </Content>
       </Container>
@@ -86,7 +82,6 @@ const Actions = styled(Div)`
 const Content = styled(Div)`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-auto-rows: 300px;
   grid-gap: 40px;
   margin-bottom: 200px;
 `

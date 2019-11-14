@@ -24,9 +24,9 @@ export const Title = styled.h1`
 `
 
 export const Subtitle = styled.h2`
-  font-size: 24px;
+  font-size: 20px;
   margin-top: 0;
-  font-weight: bold;
+  font-weight: 400;
 `
 
 export const Text = styled.p`

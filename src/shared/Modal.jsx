@@ -19,6 +19,8 @@ const modalStyles = {
   }
 }
 
+Modal.setAppElement('#root')
+
 export default ({ isOpen, onClose, children, contentStyle }) => {
   const ref = useRef(null)
   useClickAway(ref, () => onClose())

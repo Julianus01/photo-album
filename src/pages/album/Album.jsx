@@ -1,22 +1,37 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Div, Subtitle } from 'styled'
+import { Div, Text } from 'styled'
+import { Image as ImageIcon } from 'react-feather'
 
-const Album = ({ album }) => {
+const NoPhotos = () => (
+  <NoPhotosContainer>
+    <ImageIcon />
+  </NoPhotosContainer>
+)
+
+const NoPhotosContainer = styled(Div)`
+  background-color: ${({ theme }) => theme.neutral};
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+const Album = ({ album, style }) => {
   return (
-    <Container>
+    <Container style={style}>
       <div
         style={{
           flex: 1,
           width: '100%',
-          height: '100%',
-          border: '1px solid black',
-          marginBottom: 20
+          marginBottom: 20,
+          height: 300
         }}
       >
-        img
+        {!album.photos ? <NoPhotos /> : <div>photos</div>}
       </div>
-      <Subtitle>{album.name}</Subtitle>
+      <Text>{album.name}</Text>
     </Container>
   )
 }
