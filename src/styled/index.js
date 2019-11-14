@@ -23,8 +23,14 @@ export const Title = styled.h1`
   margin-top: 0;
 `
 
+export const Subtitle = styled.h2`
+  font-size: 24px;
+  margin-top: 0;
+  font-weight: bold;
+`
+
 export const Text = styled.p`
-  font-size: 20px;
+  font-size: 16px;
   margin-top: 0;
 `
 
@@ -52,6 +58,7 @@ export const Button = styled.button`
     css`
       background-color: ${theme.disabled};
       box-shadow: none;
+      pointer-events: none;
     `}
 `
 

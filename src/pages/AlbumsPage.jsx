@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { Div, Title, Button, Input } from 'styled'
+import { Div, Title, Button } from 'styled'
 import styled from 'styled-components'
 import AlbumEndpoints from 'api/AlbumEndpoints'
-import Modal from 'shared/Modal'
+import CreateAlbumModal from './album/CreateAlbumModal'
+import Album from './album/Album'
 
 const AlbumsPage = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [loading, setLoading] = useState(true)
   const [albums, setAlbums] = useState([])
-  const [newAlbumName, setNewAlbumName] = useState('')
 
   useEffect(() => {
     AlbumEndpoints.getAlbums().then(result => {
@@ -17,23 +17,17 @@ const AlbumsPage = () => {
     })
   }, [])
 
+  const onAlbumCreated = newAlbum => {
+    setAlbums([newAlbum, ...albums])
+  }
+
   return (
     <Page>
-      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
-        <ModalContent>
-          <Input
-            variant='secondary'
-            value={newAlbumName}
-            onChange={({ target: { value } }) => setNewAlbumName(value)}
-            autoFocus
-            disabled={loading}
-            placeholder='Album name'
-          />
-          <Button disabled={newAlbumName.length < 3} style={{ marginLeft: 'auto', width: 140 }}>
-            add
-          </Button>
-        </ModalContent>
-      </Modal>
+      <CreateAlbumModal
+        onSuccess={onAlbumCreated}
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+      />
 
       <Container>
         <Header>
@@ -48,14 +42,11 @@ const AlbumsPage = () => {
           {loading ? null : !albums.length ? (
             <div>No albums</div>
           ) : (
-            <>
-              <div style={{ border: '1px solid black' }}></div>
-              <div style={{ border: '1px solid black' }}></div>
-              <div style={{ border: '1px solid black' }}></div>
-              <div style={{ border: '1px solid black' }}></div>
-              <div style={{ border: '1px solid black' }}></div>
-              <div style={{ border: '1px solid black' }}></div>
-            </>
+            albums.map(album => {
+              console.log('here')
+              console.log(album)
+              return <Album key={album.id} album={album} />
+            })
           )}
         </Content>
       </Container>
@@ -71,6 +62,7 @@ const Page = styled(Div)`
   flex-direction: column;
   margin: 0 auto;
   width: 100%;
+  margin-top: 50px;
 `
 
 const Container = styled(Div)`
@@ -93,11 +85,8 @@ const Actions = styled(Div)`
 
 const Content = styled(Div)`
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-auto-rows: 500px;
-  grid-gap: 20px;
-`
-
-const ModalContent = styled(Div).attrs({ box: true })`
-  display: flex;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-auto-rows: 300px;
+  grid-gap: 40px;
+  margin-bottom: 200px;
 `
