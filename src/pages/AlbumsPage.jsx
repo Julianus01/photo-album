@@ -1,8 +1,19 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Div, Title, Button } from 'styled'
 import styled from 'styled-components'
+import AlbumEndpoints from 'api/AlbumEndpoints'
 
 const AlbumsPage = () => {
+  const [loading, setLoading] = useState(true)
+  const [albums, setAlbums] = useState([])
+
+  useEffect(() => {
+    AlbumEndpoints.getAlbums().then(result => {
+      setAlbums(result)
+      setLoading(false)
+    })
+  }, [])
+
   return (
     <Page>
       <Container>
@@ -15,12 +26,18 @@ const AlbumsPage = () => {
         </Header>
 
         <Content>
-          <div style={{ border: '1px solid black' }}></div>
-          <div style={{ border: '1px solid black' }}></div>
-          <div style={{ border: '1px solid black' }}></div>
-          <div style={{ border: '1px solid black' }}></div>
-          <div style={{ border: '1px solid black' }}></div>
-          <div style={{ border: '1px solid black' }}></div>
+          {loading ? null : !albums.length ? (
+            <div>No albums</div>
+          ) : (
+            <>
+              <div style={{ border: '1px solid black' }}></div>
+              <div style={{ border: '1px solid black' }}></div>
+              <div style={{ border: '1px solid black' }}></div>
+              <div style={{ border: '1px solid black' }}></div>
+              <div style={{ border: '1px solid black' }}></div>
+              <div style={{ border: '1px solid black' }}></div>
+            </>
+          )}
         </Content>
       </Container>
     </Page>
