@@ -4,10 +4,8 @@ import './index.css'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
 import { ThemeProvider as StyledThemeProvider } from 'styled-components'
-import {
-  ThemeContextConsumer,
-  ThemeContextProvider
-} from 'context/themeContext'
+import { ThemeContextConsumer, ThemeContextProvider } from 'context/themeContext'
+import './fb_config'
 
 const vh = window.innerHeight * 0.01
 document.documentElement.style.setProperty('--vh', `${vh}px`)
