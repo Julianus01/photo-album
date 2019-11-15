@@ -25,6 +25,10 @@ const AlbumsPage = ({ history }) => {
     setAlbums(albums.filter(({ id }) => id !== albumId))
   }
 
+  const onAlbumUpdated = updatedAlbum => {
+    setAlbums(albums.map(album => (album.id === updatedAlbum.id ? updatedAlbum : album)))
+  }
+
   return (
     <Page>
       <CreateAlbumModal
@@ -50,6 +54,7 @@ const AlbumsPage = ({ history }) => {
           ) : (
             albums.map(album => (
               <Album
+                onAlbumUpdated={onAlbumUpdated}
                 onAlbumDeleted={onAlbumDeleted}
                 onClick={() => history.push(`albums/${album.name}`)}
                 style={{ marginBottom: 60, cursor: 'pointer' }}

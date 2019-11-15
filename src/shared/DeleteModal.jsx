@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Modal from 'shared/Modal'
 import { useTemporaryMessage } from 'hooks'
 
-const CreateAlbumModal = ({ isOpen, onClose, onDelete, name }) => {
+const DeleteModal = ({ isOpen, onClose, onDelete, name }) => {
   const [errorMessage, showError, hideError] = useTemporaryMessage()
   const [loading, setLoading] = useState(false)
 
@@ -37,7 +37,7 @@ const CreateAlbumModal = ({ isOpen, onClose, onDelete, name }) => {
   )
 }
 
-export default CreateAlbumModal
+export default DeleteModal
 
 const Content = styled(Div).attrs({ box: true })`
   display: flex;

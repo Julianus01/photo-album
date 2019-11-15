@@ -40,6 +40,13 @@ const createAlbum = async albumName => {
   return newAlbum
 }
 
+const updateAlbum = async (albumId, album) =>
+  firebase
+    .firestore()
+    .collection('albums')
+    .doc(albumId)
+    .set(album, { merge: true })
+
 const deleteAlbum = albumId =>
   firebase
     .firestore()
@@ -51,5 +58,6 @@ export default {
   getAlbums,
   getAlbum,
   createAlbum,
+  updateAlbum,
   deleteAlbum
 }
