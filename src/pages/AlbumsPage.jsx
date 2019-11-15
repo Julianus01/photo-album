@@ -34,7 +34,7 @@ const AlbumsPage = () => {
           <Title style={{ marginBottom: 0 }}>My albums</Title>
 
           <Actions>
-            <Button onClick={() => setIsOpen(true)}>create</Button>
+            <Button onClick={() => setIsOpen(true)}>new album</Button>
           </Actions>
         </Header>
 

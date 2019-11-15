@@ -3,6 +3,13 @@ import { lightTheme, darkTheme } from 'theme'
 
 const getTheme = () => {
   const localStorageTheme = JSON.parse(localStorage.getItem('theme'))
+
+  if (localStorageTheme.name === 'light') {
+    document.body.style = 'background: white;'
+  } else {
+    document.body.style = 'background: black;'
+  }
+
   return localStorageTheme ? localStorageTheme : lightTheme
 }
 

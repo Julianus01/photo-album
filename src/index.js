@@ -6,6 +6,7 @@ import * as serviceWorker from './serviceWorker'
 import { ThemeProvider as StyledThemeProvider } from 'styled-components'
 import { ThemeContextConsumer, ThemeContextProvider } from 'context/themeContext'
 import './fb_config'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 const vh = window.innerHeight * 0.01
 document.documentElement.style.setProperty('--vh', `${vh}px`)
@@ -16,7 +17,9 @@ const RootHTML = () => {
       <ThemeContextConsumer>
         {({ theme }) => (
           <StyledThemeProvider theme={theme}>
-            <App />
+            <Router>
+              <App />
+            </Router>
           </StyledThemeProvider>
         )}
       </ThemeContextConsumer>

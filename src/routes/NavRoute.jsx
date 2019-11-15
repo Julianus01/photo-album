@@ -1,15 +1,21 @@
 import React from 'react'
+import Navbar from 'shared/Navbar'
 import { Div } from 'styled'
 import styled from 'styled-components'
-import { Navbar } from 'shared'
-import AlbumsPage from './pages/AlbumsPage'
-import Routes from './routes'
+import { Route } from 'react-router-dom'
 
-const App = () => {
-  return <Routes />
+const NavRoute = props => {
+  return (
+    <Page>
+      <Navbar />
+      <Content>
+        <Route {...props} />
+      </Content>
+    </Page>
+  )
 }
 
-export default App
+export default NavRoute
 
 const Page = styled(Div)`
   height: 100%;

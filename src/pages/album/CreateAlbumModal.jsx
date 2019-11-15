@@ -33,7 +33,6 @@ const CreateAlbumModal = ({ isOpen, onClose, onSuccess }) => {
             variant='secondary'
             value={albumName}
             onChange={({ target: { value } }) => setAlbumName(value)}
-            autoFocus
             disabled={loading}
             placeholder='Album name'
             onKeyPress={({ key }) => key === 'Enter' && createAlbum()}
@@ -44,7 +43,7 @@ const CreateAlbumModal = ({ isOpen, onClose, onSuccess }) => {
             disabled={albumName.length < 3 || loading}
             style={{ marginLeft: 'auto', width: 140 }}
           >
-            add
+            create
           </Button>
         </Content>
 
@@ -56,7 +55,7 @@ const CreateAlbumModal = ({ isOpen, onClose, onSuccess }) => {
 
 export default CreateAlbumModal
 
-const Content = styled(Div)`
+const Content = styled(Div).attrs({ box: true })`
   display: flex;
 `
 
