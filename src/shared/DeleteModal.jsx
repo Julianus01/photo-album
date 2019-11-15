@@ -51,6 +51,5 @@ const Error = styled(Text)`
 
 const DeleteButton = styled(Button)`
   margin-left: auto;
-  width: 140px;
-  background-color: ${({ theme }) => theme.danger};
+  width: fit-content;
 `

@@ -29,6 +29,12 @@ const Container = styled(Div)`
   background-color: black;
   position: relative;
 
+  :hover {
+    img {
+      transform: scale(1.05);
+    }
+  }
+
   ${({ elements }) => {
     if (elements === 4) {
       return css`
@@ -43,6 +49,12 @@ const Image = styled.img`
   width: 100%;
   height: auto;
   object-fit: cover;
+
+  transition: transform 0.13s linear;
+  -moz-transition: transform 0.15s linear;
+  -webkit-transition: transform 0.15s linear;
+  -o-transition: transform 0.15s linear;
+  -ms-transition: transform 0.15s linear;
 `
 
 const Absolute = styled.div`
@@ -52,7 +64,7 @@ const Absolute = styled.div`
   left: 0;
   right: 0;
   height: 150px;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.7), transparent);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), transparent);
   display: flex;
   padding: 20px;
 `

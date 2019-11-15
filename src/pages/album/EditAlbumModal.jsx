@@ -71,5 +71,5 @@ const Error = styled(Text)`
 
 const EditButton = styled(Button)`
   margin-left: auto;
-  width: 140px;
+  width: fit-content;
 `

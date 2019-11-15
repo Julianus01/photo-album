@@ -54,20 +54,21 @@ export const Button = styled.button`
 
   transition: all 0.3s ease-in-out;
 
-  ${({ disabled, theme }) =>
-    disabled &&
-    css`
-      background-color: ${theme.disabled};
-      box-shadow: none;
-      pointer-events: none;
-    `}
-
   ${({ theme }) =>
     theme.name === 'dark' &&
     css`
       background-color: transparent;
       color: ${theme.primary_blue};
       box-shadow: none;
+    `}
+
+  ${({ disabled, theme }) =>
+    disabled &&
+    css`
+      background-color: ${theme.name === 'dark' ? 'transparent' : theme.disabled};
+      color: ${theme.disabled_button_text};
+      box-shadow: none;
+      pointer-events: none;
     `}
 `
 

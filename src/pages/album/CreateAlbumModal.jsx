@@ -45,13 +45,9 @@ const CreateAlbumModal = ({ isOpen, onClose, onSuccess }) => {
             onKeyPress={({ key }) => key === 'Enter' && createAlbum()}
           />
 
-          <Button
-            onClick={createAlbum}
-            disabled={albumName.length < 3 || loading}
-            style={{ marginLeft: 'auto', width: 140 }}
-          >
+          <CreateButton onClick={createAlbum} disabled={albumName.length < 3 || loading}>
             create
-          </Button>
+          </CreateButton>
         </Content>
 
         {errorMessage && <Error>{errorMessage}</Error>}
@@ -69,4 +65,9 @@ const Content = styled(Div).attrs({ box: true })`
 const Error = styled(Text)`
   color: red;
   font-size: 14px;
+`
+
+const CreateButton = styled(Button)`
+  margin-left: auto;
+  width: fit-content;
 `
