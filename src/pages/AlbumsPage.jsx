@@ -141,4 +141,12 @@ const Content = styled(Div)`
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 40px;
   margin-bottom: 200px;
+
+  @media (max-width: 1000px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
 `
