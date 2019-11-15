@@ -4,13 +4,27 @@ const COLLECTION = 'albums'
 const PHOTOS_COLLECTION = 'photos'
 
 const getAlbums = async () => {
-  const snapshot = await firebase
+  const albumsSnap = await firebase
     .firestore()
     .collection(COLLECTION)
     .orderBy('dateCreated', 'desc')
     .get()
 
-  return snapshot.docs.map(doc => doc.data())
+  return Promise.all(
+    albumsSnap.docs.map(doc => {
+      const album = doc.data()
+
+      return firebase
+        .firestore()
+        .collection(COLLECTION)
+        .doc(album.id)
+        .collection(PHOTOS_COLLECTION)
+        .limit(4)
+        .get()
+        .then(snap => snap.docs.map(photos => photos.data()))
+        .then(photos => ({ ...album, photos }))
+    })
+  )
 }
 
 const getAlbum = async albumName => {

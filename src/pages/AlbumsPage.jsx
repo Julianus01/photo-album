@@ -54,13 +54,12 @@ const AlbumsPage = ({ history }) => {
             <div>No albums</div>
           ) : (
             albums.map(album => (
-              <Fade bottom>
+              <Fade key={album.id} bottom>
                 <Album
                   onAlbumUpdated={onAlbumUpdated}
                   onAlbumDeleted={onAlbumDeleted}
                   onClick={() => history.push(`albums/${album.name}`)}
                   style={{ marginBottom: 60, cursor: 'pointer' }}
-                  key={album.id}
                   album={album}
                 />
               </Fade>
