@@ -6,6 +6,7 @@ export const lightTheme = {
   placeholder: 'rgba(0, 0, 0, 0.35)',
   disabled: 'rgba(0, 0, 0, 0.35)',
   neutral: '#f8f8f8',
+  danger: '#f5222d',
 
   // specific
   background: {
@@ -25,6 +26,7 @@ export const darkTheme = {
   placeholder: 'rgba(255, 255, 255, 0.65)',
   disabled: 'rgba(0, 0, 0, 0.1)',
   neutral: '#1a1a1a',
+  danger: '#f5222d',
 
   // specific
   background: {

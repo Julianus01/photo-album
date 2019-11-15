@@ -21,7 +21,9 @@ const AlbumsPage = ({ history }) => {
     setAlbums([newAlbum, ...albums])
   }
 
-  const onAlbumClicked = albumName => history.push(`albums/${albumName}`)
+  const onAlbumDeleted = albumId => {
+    setAlbums(albums.filter(({ id }) => id !== albumId))
+  }
 
   return (
     <Page>
@@ -48,7 +50,8 @@ const AlbumsPage = ({ history }) => {
           ) : (
             albums.map(album => (
               <Album
-                onClick={() => onAlbumClicked(album.name)}
+                onAlbumDeleted={onAlbumDeleted}
+                onClick={() => history.push(`albums/${album.name}`)}
                 style={{ marginBottom: 60, cursor: 'pointer' }}
                 key={album.id}
                 album={album}

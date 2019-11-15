@@ -27,7 +27,7 @@ export default ({ isOpen, onClose, children, contentStyle }) => {
 
   return (
     <Modal style={modalStyles} isOpen={isOpen} contentLabel='Example Modal'>
-      <ModalContent box ref={ref} style={contentStyle}>
+      <ModalContent onClick={event => event.stopPropagation()} box ref={ref} style={contentStyle}>
         {children}
       </ModalContent>
     </Modal>

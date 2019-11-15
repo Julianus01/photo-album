@@ -17,6 +17,10 @@ const getAlbum = async albumName => {
     .where('name', '==', albumName)
     .get()
 
+  if (!snapshot.docs.length) {
+    return null
+  }
+
   return snapshot.docs[0].data()
 }
 
@@ -36,8 +40,16 @@ const createAlbum = async albumName => {
   return newAlbum
 }
 
+const deleteAlbum = albumId =>
+  firebase
+    .firestore()
+    .collection('albums')
+    .doc(albumId)
+    .delete()
+
 export default {
   getAlbums,
   getAlbum,
-  createAlbum
+  createAlbum,
+  deleteAlbum
 }

@@ -3,7 +3,7 @@ import { Div, Button, Input, Text } from 'styled'
 import styled from 'styled-components'
 import AlbumEndpoints from 'api/AlbumEndpoints'
 import Modal from 'shared/Modal'
-import { useTemporaryMessage } from '../../hooks'
+import { useTemporaryMessage } from 'hooks'
 
 const CreateAlbumModal = ({ isOpen, onClose, onSuccess }) => {
   const [errorMessage, showError, hideError] = useTemporaryMessage()
@@ -13,9 +13,11 @@ const CreateAlbumModal = ({ isOpen, onClose, onSuccess }) => {
   const createAlbum = async () => {
     try {
       hideError()
+
       setLoading(true)
       const newAlbum = await AlbumEndpoints.createAlbum(albumName)
       setLoading(false)
+
       onSuccess(newAlbum)
       setAlbumName('')
       onClose()
@@ -36,7 +38,6 @@ const CreateAlbumModal = ({ isOpen, onClose, onSuccess }) => {
       <Div box>
         <Content>
           <Input
-            variant='secondary'
             value={albumName}
             onChange={({ target: { value } }) => setAlbumName(value)}
             disabled={loading}
@@ -68,5 +69,4 @@ const Content = styled(Div).attrs({ box: true })`
 const Error = styled(Text)`
   color: red;
   font-size: 14px;
-  margin-left: 20px;
 `

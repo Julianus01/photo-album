@@ -78,7 +78,6 @@ const InputContainer = styled.div`
 
 const TextInput = styled.input`
   border: 0;
-  font-weight: bold;
   background-color: transparent;
   font-size: 16px;
   color: ${({ theme }) => theme.text.primary};
