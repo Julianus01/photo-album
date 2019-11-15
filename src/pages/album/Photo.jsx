@@ -12,7 +12,7 @@ const Photo = ({ photo, deleteClicked }) => {
         <DeleteIcon onClick={() => deleteClicked(photo)} size={16} />
       </Absolute>
 
-      <Image src={photo.src} style={{ height: 300 }} />
+      <Image src={photo.src} />
     </Container>
   )
 }
@@ -24,11 +24,14 @@ const Container = styled(Div)`
   height: 100%;
   position: relative;
   overflow: hidden;
-  /* border: ${({ theme }) => `4px solid ${theme.photo_border}`}; */
 
   :hover {
     img {
       transform: scale(1.05);
+    }
+
+    svg {
+      opacity: 1;
     }
   }
 `
@@ -49,12 +52,6 @@ const Absolute = styled.div`
     color: white;
     opacity: 0;
     margin-left: auto;
-  }
-
-  :hover {
-    svg {
-      opacity: 1;
-    }
   }
 `
 

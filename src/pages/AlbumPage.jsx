@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import AlbumEndpoints from '../api/AlbumEndpoints'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { Div, Title, Button } from 'styled'
 import { Link } from 'react-router-dom'
 import { useDropArea } from 'react-use'
@@ -65,11 +65,11 @@ const AlbumPage = ({ match }) => {
 
           {photos.length ? (
             <Actions>
-              <IconContainer active={viewOption === 'list'}>
+              <IconContainer onClick={() => setViewOption('list')} active={viewOption === 'list'}>
                 <ListIcon />
               </IconContainer>
 
-              <IconContainer active={viewOption === 'grid'}>
+              <IconContainer onClick={() => setViewOption('grid')} active={viewOption === 'grid'}>
                 <GridIcon />
               </IconContainer>
 
@@ -85,7 +85,7 @@ const AlbumPage = ({ match }) => {
             {!photos.length ? (
               <NoPhotos onBrowse={() => setAddPhotoModal(true)} />
             ) : (
-              <Content>
+              <Content viewOption={viewOption}>
                 {album.photos.map(photo => (
                   <Fade key={photo.id}>
                     <Photo photo={photo} deleteClicked={stageForDeletion} />
@@ -164,15 +164,31 @@ const DropArea = styled(Div)`
 
 const Content = styled(Div)`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-auto-rows: 300px;
   max-width: 1000px;
   margin: 0 auto;
   grid-gap: 4px;
+
+  ${({ viewOption }) => {
+    if (viewOption === 'list') {
+      return css`
+        grid-template-columns: 500px;
+        grid-auto-rows: 500px;
+        justify-content: center;
+      `
+    }
+
+    if (viewOption === 'grid') {
+      return css`
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-auto-rows: 300px;
+      `
+    }
+  }}
 `
 
 const IconContainer = styled(Div)`
   padding: 10px;
+  cursor: pointer;
 
   svg {
     margin-right: 10px;
