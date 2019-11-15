@@ -62,8 +62,8 @@ export const Button = styled.button`
       pointer-events: none;
     `}
 
-  ${({ flat, theme }) =>
-    flat &&
+  ${({ theme }) =>
+    theme.name === 'dark' &&
     css`
       background-color: transparent;
       color: ${theme.primary_blue};
