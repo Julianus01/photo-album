@@ -40,6 +40,13 @@ const AlbumPage = ({ match }) => {
     setDeleteModal(true)
   }
 
+  const onDeletePhoto = async () => {
+    await AlbumEndpoints.deletePhoto(album.id, photoToDelete.id)
+    setAlbum({ ...album, photos: album.photos.filter(({ id }) => id !== photoToDelete.id) })
+    setPhotoToDelete(null)
+    setDeleteModal(false)
+  }
+
   const photos = fp.getOr([], 'photos')(album)
 
   return (
@@ -90,7 +97,7 @@ const AlbumPage = ({ match }) => {
       />
 
       <DeleteModal
-        onDelete={null}
+        onDelete={onDeletePhoto}
         message={`Delete photo '${fp.get('name')(photoToDelete)}'?`}
         onClose={() => setDeleteModal(false)}
         isOpen={deleteModal}

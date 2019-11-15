@@ -14,8 +14,6 @@ const DeleteModal = ({ isOpen, onClose, onDelete, message }) => {
 
       setLoading(true)
       await onDelete()
-      setLoading(false)
-      onClose()
     } catch (error) {
       showError(error)
       setLoading(false)

@@ -82,6 +82,15 @@ const deleteAlbum = albumId =>
     .doc(albumId)
     .delete()
 
+const deletePhoto = (albumId, photoId) =>
+  firebase
+    .firestore()
+    .collection(COLLECTION)
+    .doc(albumId)
+    .collection(PHOTOS_COLLECTION)
+    .doc(photoId)
+    .delete()
+
 const addPhoto = async (albumId, photoName, photoFile) => {
   const doc = await firebase
     .firestore()
@@ -114,5 +123,6 @@ export default {
   updateAlbum,
   deleteAlbum,
 
-  addPhoto
+  addPhoto,
+  deletePhoto
 }

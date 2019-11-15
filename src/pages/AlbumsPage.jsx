@@ -32,6 +32,7 @@ const AlbumsPage = ({ history }) => {
     await AlbumEndpoints.deleteAlbum(albumInStage.id)
     setAlbums(albums.filter(({ id }) => id !== albumInStage.id))
     setAlbumInStage(null)
+    setDeleteModal(false)
   }
 
   const onAlbumUpdated = updatedAlbum => {
