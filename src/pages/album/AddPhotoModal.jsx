@@ -6,7 +6,7 @@ import { useTemporaryMessage } from 'hooks'
 import NoPhoto from './NoPhoto'
 import AlbumEndpoints from '../../api/AlbumEndpoints'
 
-const AddPhotoModal = ({ isOpen, onClose, dragFile, album }) => {
+const AddPhotoModal = ({ isOpen, onClose, dragFile, album, onSuccess }) => {
   const [errorMessage, showError, hideError] = useTemporaryMessage()
   const [loading, setLoading] = useState(false)
   const [photoName, setPhotoName] = useState('')
@@ -25,10 +25,19 @@ const AddPhotoModal = ({ isOpen, onClose, dragFile, album }) => {
   }
 
   const addPhoto = async () => {
-    const response = await AlbumEndpoints.addPhoto(album.id, photoName, photoFile)
+    try {
+      hideError()
 
-    console.log('RESPONSE')
-    console.log(response)
+      setLoading(true)
+      const photo = await AlbumEndpoints.addPhoto(album.id, photoName, photoFile)
+      setLoading(false)
+
+      onSuccess(photo)
+      closeModal()
+    } catch (error) {
+      showError(error)
+      setLoading(false)
+    }
   }
 
   return (
@@ -54,12 +63,11 @@ const AddPhotoModal = ({ isOpen, onClose, dragFile, album }) => {
             {photoFile && <ImgPreview src={URL.createObjectURL(photoFile)} />}
           </PhotoContainer>
 
+          {errorMessage && <Error>{errorMessage}</Error>}
           <AddButton onClick={addPhoto} disabled={loading || photoName.length < 3 || !photoFile}>
             add photo
           </AddButton>
         </Content>
-
-        {errorMessage && <Error>{errorMessage}</Error>}
       </Div>
     </Modal>
   )
@@ -75,6 +83,7 @@ const Content = styled(Div).attrs({ box: true })`
 const Error = styled(Text)`
   color: red;
   font-size: 14px;
+  margin-bottom: 20px;
 `
 
 const AddButton = styled(Button)`

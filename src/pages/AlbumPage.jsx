@@ -27,6 +27,8 @@ const AlbumPage = ({ match }) => {
     })
   }, [match.params.name])
 
+  const onAddedPhoto = photo => setAlbum({ ...album, photos: [photo, ...album.photos] })
+
   return (
     <Page>
       <Container>
@@ -47,14 +49,28 @@ const AlbumPage = ({ match }) => {
           </Actions>
         </Header>
 
-        {/* <Content> */}
         <DropArea {...bond}>
-          <NoPhotos onBrowse={() => setAddPhotoModal(true)} />
+          {album && album.photos && !album.photos.length && (
+            <NoPhotos onBrowse={() => setAddPhotoModal(true)} />
+          )}
+
+          {album && album.photos && album.photos.length && (
+            <div>
+              {album.photos.map(photo => (
+                <img
+                  alt='test'
+                  key={photo.id}
+                  src={photo.src}
+                  style={{ width: 300, height: 300 }}
+                />
+              ))}
+            </div>
+          )}
         </DropArea>
-        {/* </Content> */}
       </Container>
 
       <AddPhotoModal
+        onSuccess={onAddedPhoto}
         album={album}
         dragFile={dragFile}
         onClose={() => setAddPhotoModal(false)}
