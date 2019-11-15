@@ -12,13 +12,15 @@ const readableBytes = bytes => {
   return (bytes / Math.pow(1024, i)).toFixed(2) * 1 + ' ' + sizes[i]
 }
 
-const Photo = ({ photo, stageForDeletion, stageForEdit, isListView }) => {
+const Photo = ({ photo, stageForDeletion, stageForEdit, stageForPreview, isListView }) => {
   return (
-    <Container>
+    <Container onClick={() => stageForPreview(photo)}>
       <Absolute>
         <div>
           <Name isListView={isListView}>{photo.name}</Name>
-          {isListView && <Text>{readableBytes(fp.getOr(0, 'size')(photo))}</Text>}
+          {isListView && (
+            <Text style={{ color: 'white' }}>{readableBytes(fp.getOr(0, 'size')(photo))}</Text>
+          )}
         </div>
 
         <div style={{ marginLeft: 'auto' }}>

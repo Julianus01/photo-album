@@ -12,6 +12,7 @@ import DeleteModal from 'shared/DeleteModal'
 import Fade from 'react-reveal/Fade'
 import { List as ListIcon, Grid as GridIcon } from 'react-feather'
 import EditPhotoModal from './album/EditPhotoModal'
+import PhotoModalPreview from './album/PhotoModalPreview'
 
 const AlbumPage = ({ match }) => {
   const [loading, setLoading] = useState(true)
@@ -22,6 +23,7 @@ const AlbumPage = ({ match }) => {
   const [deleteModal, setDeleteModal] = useState(false)
   const [photoInStage, setPhotoInStage] = useState(null)
   const [viewOption, setViewOption] = useState('grid')
+  const [photoPreview, setPhotoPreview] = useState(false)
 
   const [bond] = useDropArea({
     onFiles: ([file]) => {
@@ -47,6 +49,12 @@ const AlbumPage = ({ match }) => {
   const stageForEdit = photo => {
     setPhotoInStage(photo)
     setEditModal(true)
+  }
+
+  const stageForPreview = photo => {
+    console.log(photo)
+    setPhotoInStage(photo)
+    setPhotoPreview(true)
   }
 
   const onDeletePhoto = async () => {
@@ -108,6 +116,7 @@ const AlbumPage = ({ match }) => {
                       photo={photo}
                       stageForDeletion={stageForDeletion}
                       stageForEdit={stageForEdit}
+                      stageForPreview={stageForPreview}
                     />
                   </Fade>
                 ))}
@@ -139,6 +148,14 @@ const AlbumPage = ({ match }) => {
           isOpen={editModal}
           photo={photoInStage}
           onClose={() => setEditModal(false)}
+        />
+      )}
+
+      {photoInStage && (
+        <PhotoModalPreview
+          isOpen={photoPreview}
+          onClose={() => setPhotoPreview(false)}
+          src={photoInStage.src}
         />
       )}
     </Page>
@@ -211,6 +228,10 @@ const Content = styled(Div)`
       return css`
         grid-template-columns: 1fr 1fr 1fr;
         grid-auto-rows: 300px;
+
+        @media (max-width: 900px) {
+          grid-template-columns: 1fr 1fr;
+        }
       `
     }
   }}
