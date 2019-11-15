@@ -3,11 +3,13 @@ import styled, { css } from 'styled-components'
 import { Div } from 'styled'
 
 const AlbumThumbnail = ({ photos }) => {
+  const photosToDisplay = photos.length === 4 ? photos : [photos[0]]
+
   return (
     <Container elements={photos.length}>
       <Absolute />
 
-      {photos.map(photo => (
+      {photosToDisplay.map(photo => (
         <div key={photo.id} style={{ overflow: 'hidden' }}>
           <Image src={photo.src} />
         </div>
@@ -22,16 +24,16 @@ const Container = styled(Div)`
   height: 100%;
   width: 100%;
   display: grid;
-  grid-template-rows: 1fr 1fr;
-  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr;
   background-color: black;
   position: relative;
 
   ${({ elements }) => {
-    if (elements === 1) {
+    if (elements === 4) {
       return css`
-        grid-template-rows: 1fr;
-        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
       `
     }
   }}
