@@ -8,12 +8,17 @@ import NoPhotos from './album/NoPhotos'
 import AddPhotoModal from './album/AddPhotoModal'
 import fp from 'lodash/fp'
 import Photo from './album/Photo'
+import DeleteModal from 'shared/DeleteModal'
+import Fade from 'react-reveal/Fade'
 
 const AlbumPage = ({ match }) => {
   const [loading, setLoading] = useState(true)
   const [album, setAlbum] = useState(null)
   const [dragFile, setDragFile] = useState(null)
   const [addPhotoModal, setAddPhotoModal] = useState(false)
+  const [deleteModal, setDeleteModal] = useState(false)
+  const [photoToDelete, setPhotoToDelete] = useState(null)
+
   const [bond] = useDropArea({
     onFiles: ([file]) => {
       setAddPhotoModal(true)
@@ -29,6 +34,11 @@ const AlbumPage = ({ match }) => {
   }, [match.params.name])
 
   const onAddedPhoto = photo => setAlbum({ ...album, photos: [photo, ...album.photos] })
+
+  const stageForDeletion = photo => {
+    setPhotoToDelete(photo)
+    setDeleteModal(true)
+  }
 
   const photos = fp.getOr([], 'photos')(album)
 
@@ -61,7 +71,9 @@ const AlbumPage = ({ match }) => {
             ) : (
               <Content>
                 {album.photos.map(photo => (
-                  <Photo key={photo.id} photo={photo} />
+                  <Fade>
+                    <Photo key={photo.id} photo={photo} deleteClicked={stageForDeletion} />
+                  </Fade>
                 ))}
               </Content>
             )}
@@ -75,6 +87,13 @@ const AlbumPage = ({ match }) => {
         dragFile={dragFile}
         onClose={() => setAddPhotoModal(false)}
         isOpen={addPhotoModal}
+      />
+
+      <DeleteModal
+        onDelete={null}
+        message={`Delete photo '${fp.get('name')(photoToDelete)}'?`}
+        onClose={() => setDeleteModal(false)}
+        isOpen={deleteModal}
       />
     </Page>
   )

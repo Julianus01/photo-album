@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Modal from 'shared/Modal'
 import { useTemporaryMessage } from 'hooks'
 
-const DeleteModal = ({ isOpen, onClose, onDelete, name }) => {
+const DeleteModal = ({ isOpen, onClose, onDelete, message }) => {
   const [errorMessage, showError, hideError] = useTemporaryMessage()
   const [loading, setLoading] = useState(false)
 
@@ -24,7 +24,7 @@ const DeleteModal = ({ isOpen, onClose, onDelete, name }) => {
     <Modal isOpen={isOpen} onClose={() => onClose()}>
       <Div onClick={event => event.stopPropagation()} box>
         <Content>
-          <Text style={{ marginBottom: 0 }}>Delete '{name}'?</Text>
+          <Text style={{ marginBottom: 0 }}>{message}</Text>
 
           <DeleteButton onClick={onConfirm} disabled={loading}>
             delete

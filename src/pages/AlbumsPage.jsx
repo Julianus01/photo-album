@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import AlbumEndpoints from 'api/AlbumEndpoints'
 import CreateAlbumModal from './album/CreateAlbumModal'
 import Album from './album/Album'
+import Fade from 'react-reveal/Fade'
 
 const AlbumsPage = ({ history }) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -53,14 +54,16 @@ const AlbumsPage = ({ history }) => {
             <div>No albums</div>
           ) : (
             albums.map(album => (
-              <Album
-                onAlbumUpdated={onAlbumUpdated}
-                onAlbumDeleted={onAlbumDeleted}
-                onClick={() => history.push(`albums/${album.name}`)}
-                style={{ marginBottom: 60, cursor: 'pointer' }}
-                key={album.id}
-                album={album}
-              />
+              <Fade bottom>
+                <Album
+                  onAlbumUpdated={onAlbumUpdated}
+                  onAlbumDeleted={onAlbumDeleted}
+                  onClick={() => history.push(`albums/${album.name}`)}
+                  style={{ marginBottom: 60, cursor: 'pointer' }}
+                  key={album.id}
+                  album={album}
+                />
+              </Fade>
             ))
           )}
         </Content>

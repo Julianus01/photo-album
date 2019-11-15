@@ -3,13 +3,13 @@ import styled from 'styled-components'
 import { Div, Text } from 'styled'
 import { Delete as DeleteIcon } from 'react-feather'
 
-const Photo = ({ photo }) => {
+const Photo = ({ photo, deleteClicked }) => {
   return (
     <Container>
       <Absolute>
         <Name>{photo.name}</Name>
 
-        <DeleteIcon size={16} />
+        <DeleteIcon onClick={() => deleteClicked(photo)} size={16} />
       </Absolute>
 
       <Image src={photo.src} style={{ height: 300 }} />

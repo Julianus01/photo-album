@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { Div, Text } from 'styled'
+import { Div, Subtitle } from 'styled'
 import { Delete as DeleteIcon, Edit2 as EditIcon } from 'react-feather'
 import DeleteModal from 'shared/DeleteModal'
 import AlbumEndpoints from '../../api/AlbumEndpoints'
@@ -29,7 +29,7 @@ const Album = ({ album, onAlbumDeleted, onAlbumUpdated, ...rest }) => {
       </div>
 
       <Description onClick={event => event.stopPropagation()}>
-        <Text>{album.name}</Text>
+        <Subtitle>{album.name}</Subtitle>
 
         <Actions>
           <EditIcon onClick={() => setEditModal(true)} style={{ marginRight: 20 }} size={16} />
@@ -39,7 +39,7 @@ const Album = ({ album, onAlbumDeleted, onAlbumUpdated, ...rest }) => {
 
       <DeleteModal
         onDelete={onDelete}
-        name={album.name}
+        message={`Delete album '${album.name}'?`}
         onClose={() => setDeleteModal(false)}
         isOpen={deleteModal}
       />
@@ -59,6 +59,16 @@ export default Album
 const Container = styled(Div)`
   display: flex;
   flex-direction: column;
+
+  svg {
+    opacity: 0;
+  }
+
+  :hover {
+    svg {
+      opacity: 1;
+    }
+  }
 `
 
 const Description = styled(Div)`

@@ -21,4 +21,8 @@ const NoPhotosContainer = styled(Div)`
   align-items: center;
   justify-content: center;
   border: ${({ border, theme }) => (border ? `1px solid ${theme.placeholder}` : 0)};
+
+  svg {
+    opacity: 1 !important;
+  }
 `
