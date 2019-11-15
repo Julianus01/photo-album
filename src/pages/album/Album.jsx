@@ -2,21 +2,11 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Div, Subtitle } from 'styled'
 import { Delete as DeleteIcon, Edit2 as EditIcon } from 'react-feather'
-import DeleteModal from 'shared/DeleteModal'
-import AlbumEndpoints from '../../api/AlbumEndpoints'
-import EditAlbumModal from './EditAlbumModal'
 import NoPhoto from './NoPhoto'
 import AlbumThumbnail from './AlbumThumbnail'
+import fp from 'lodash/fp'
 
-const Album = ({ album, onAlbumDeleted, onAlbumUpdated, ...rest }) => {
-  const [deleteModal, setDeleteModal] = useState(false)
-  const [editModal, setEditModal] = useState(false)
-
-  const onDelete = async () => {
-    await AlbumEndpoints.deleteAlbum(album.id)
-    onAlbumDeleted(album.id)
-  }
-
+const Album = ({ album, stageForDeletion, ...rest }) => {
   return (
     <Container {...rest}>
       <div
@@ -26,19 +16,19 @@ const Album = ({ album, onAlbumDeleted, onAlbumUpdated, ...rest }) => {
           height: 300
         }}
       >
-        {album && !album.photos.length ? <NoPhoto /> : <AlbumThumbnail photos={album.photos} />}
+        {!fp.get('photos.length')(album) ? <NoPhoto /> : <AlbumThumbnail photos={album.photos} />}
       </div>
 
       <Description onClick={event => event.stopPropagation()}>
         <Subtitle>{album.name}</Subtitle>
 
         <Actions>
-          <EditIcon onClick={() => setEditModal(true)} style={{ marginRight: 20 }} size={16} />
-          <DeleteIcon onClick={() => setDeleteModal(true)} size={16} />
+          <EditIcon onClick={() => stageForDeletion(album)} style={{ marginRight: 20 }} size={16} />
+          <DeleteIcon onClick={() => stageForDeletion(album)} size={16} />
         </Actions>
       </Description>
 
-      <DeleteModal
+      {/* <DeleteModal
         onDelete={onDelete}
         message={`Delete album '${album.name}'?`}
         onClose={() => setDeleteModal(false)}
@@ -50,7 +40,7 @@ const Album = ({ album, onAlbumDeleted, onAlbumUpdated, ...rest }) => {
         isOpen={editModal}
         album={album}
         onClose={() => setEditModal(false)}
-      />
+      /> */}
     </Container>
   )
 }

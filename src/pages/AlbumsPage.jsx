@@ -5,11 +5,17 @@ import AlbumEndpoints from 'api/AlbumEndpoints'
 import CreateAlbumModal from './album/CreateAlbumModal'
 import Album from './album/Album'
 import Fade from 'react-reveal/Fade'
+import DeleteModal from 'shared/DeleteModal'
+import EditAlbumModal from './album/EditAlbumModal'
+import fp from 'lodash/fp'
 
 const AlbumsPage = ({ history }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [loading, setLoading] = useState(true)
   const [albums, setAlbums] = useState([])
+  const [deleteModal, setDeleteModal] = useState(false)
+  const [editModal, setEditModal] = useState(false)
+  const [albumInStage, setAlbumInStage] = useState(null)
 
   useEffect(() => {
     AlbumEndpoints.getAlbums().then(result => {
@@ -22,12 +28,18 @@ const AlbumsPage = ({ history }) => {
     setAlbums([newAlbum, ...albums])
   }
 
-  const onAlbumDeleted = albumId => {
-    setAlbums(albums.filter(({ id }) => id !== albumId))
+  const onDelete = async () => {
+    await AlbumEndpoints.deleteAlbum(albumInStage.id)
+    setAlbums(albums.filter(({ id }) => id !== albumInStage.id))
   }
 
   const onAlbumUpdated = updatedAlbum => {
     setAlbums(albums.map(album => (album.id === updatedAlbum.id ? updatedAlbum : album)))
+  }
+
+  const stageForDeletion = album => {
+    setAlbumInStage(album)
+    setDeleteModal(true)
   }
 
   return (
@@ -54,10 +66,9 @@ const AlbumsPage = ({ history }) => {
             <div>No albums</div>
           ) : (
             albums.map(album => (
-              <Fade key={album.id} bottom>
+              <Fade key={album.id}>
                 <Album
-                  onAlbumUpdated={onAlbumUpdated}
-                  onAlbumDeleted={onAlbumDeleted}
+                  stageForDeletion={stageForDeletion}
                   onClick={() => history.push(`albums/${album.name}`)}
                   style={{ marginBottom: 60, cursor: 'pointer' }}
                   album={album}
@@ -67,6 +78,22 @@ const AlbumsPage = ({ history }) => {
           )}
         </Content>
       </Container>
+
+      <DeleteModal
+        onDelete={onDelete}
+        message={`Delete album '${fp.get('name')(albumInStage)}'?`}
+        onClose={() => setDeleteModal(false)}
+        isOpen={deleteModal}
+      />
+
+      {albumInStage && (
+        <EditAlbumModal
+          onUpdate={onAlbumUpdated}
+          isOpen={editModal}
+          album={albumInStage}
+          onClose={() => setEditModal(false)}
+        />
+      )}
     </Page>
   )
 }
