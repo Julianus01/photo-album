@@ -5,7 +5,7 @@ import { Div, Text } from 'styled'
 
 const NoPhoto = ({ text, border, ...rest }) => (
   <NoPhotosContainer border={border} {...rest}>
-    <ImageIcon />
+    <ImageIcon style={{ marginBottom: text ? 20 : 0 }} />
     {text && <Text>{text}</Text>}
   </NoPhotosContainer>
 )

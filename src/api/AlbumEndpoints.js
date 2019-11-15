@@ -54,7 +54,7 @@ const getAlbum = async albumName => {
 
 const createAlbum = async albumName => {
   if (await getAlbum(albumName)) {
-    return Promise.reject('A project with this name already exists!')
+    return Promise.reject('An album with this name already exists!')
   }
 
   const doc = await firebase
@@ -68,12 +68,17 @@ const createAlbum = async albumName => {
   return newAlbum
 }
 
-const updateAlbum = async (albumId, album) =>
-  firebase
+const updateAlbum = async (albumId, album) => {
+  if (await getAlbum(album.name)) {
+    return Promise.reject('An album with this name already exists!')
+  }
+
+  return firebase
     .firestore()
     .collection(COLLECTION)
     .doc(albumId)
     .set(album, { merge: true })
+}
 
 const deleteAlbum = albumId =>
   firebase

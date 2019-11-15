@@ -135,7 +135,7 @@ const Actions = styled(Div)`
   flex: 1;
   justify-content: flex-end;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
 `
 
 const Content = styled(Div)`

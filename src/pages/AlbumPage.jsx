@@ -10,6 +10,7 @@ import fp from 'lodash/fp'
 import Photo from './album/Photo'
 import DeleteModal from 'shared/DeleteModal'
 import Fade from 'react-reveal/Fade'
+import { List as ListIcon, Grid as GridIcon } from 'react-feather'
 
 const AlbumPage = ({ match }) => {
   const [loading, setLoading] = useState(true)
@@ -18,6 +19,7 @@ const AlbumPage = ({ match }) => {
   const [addPhotoModal, setAddPhotoModal] = useState(false)
   const [deleteModal, setDeleteModal] = useState(false)
   const [photoToDelete, setPhotoToDelete] = useState(null)
+  const [viewOption, setViewOption] = useState('grid')
 
   const [bond] = useDropArea({
     onFiles: ([file]) => {
@@ -44,7 +46,6 @@ const AlbumPage = ({ match }) => {
     await AlbumEndpoints.deletePhoto(album.id, photoToDelete.id)
     setAlbum({ ...album, photos: album.photos.filter(({ id }) => id !== photoToDelete.id) })
     setPhotoToDelete(null)
-    setDeleteModal(false)
   }
 
   const photos = fp.getOr([], 'photos')(album)
@@ -64,6 +65,14 @@ const AlbumPage = ({ match }) => {
 
           {photos.length ? (
             <Actions>
+              <IconContainer active={viewOption === 'list'}>
+                <ListIcon />
+              </IconContainer>
+
+              <IconContainer active={viewOption === 'grid'}>
+                <GridIcon />
+              </IconContainer>
+
               <Button onClick={() => setAddPhotoModal(true)} style={{ width: 'fit-content' }}>
                 add photo
               </Button>
@@ -143,7 +152,7 @@ const Actions = styled(Div)`
   flex: 1;
   justify-content: flex-end;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
 `
 
 const DropArea = styled(Div)`
@@ -160,4 +169,13 @@ const Content = styled(Div)`
   max-width: 1000px;
   margin: 0 auto;
   grid-gap: 4px;
+`
+
+const IconContainer = styled(Div)`
+  padding: 10px;
+
+  svg {
+    margin-right: 10px;
+    color: ${({ theme, active }) => (active ? theme.text.primary : theme.inactive)};
+  }
 `

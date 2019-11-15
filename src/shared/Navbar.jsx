@@ -4,16 +4,16 @@ import styled from 'styled-components'
 import ThemeContext from 'context/themeContext'
 import { Sun, Moon } from 'react-feather'
 
-const Navbar = () => {
+const Navbar = ({ showShadow }) => {
   const {
     theme,
     actions: { triggerTheme }
   } = useContext(ThemeContext)
 
   return (
-    <Container>
+    <Container showShadow={showShadow}>
       <Content>
-        <Text style={{ fontWeight: 'bold' }}>albump.</Text>
+        <Text style={{ fontWeight: 'bold', marginBottom: 0 }}>albump.</Text>
 
         <IconContainer onClick={() => triggerTheme()} style={{ padding: 8 }}>
           {theme.name === 'light' ? <Sun /> : <Moon />}
@@ -34,16 +34,18 @@ const Container = styled(Div)`
   top: 0;
   left: 0;
   right: 0;
-  z-index: 999;
+  z-index: 1;
+  background: ${({ theme }) => theme.background_blur};
+  backdrop-filter: saturate(180%) blur(20px);
 `
 
-const IconContainer = styled(Div)`
+const IconContainer = styled.div`
   cursor: pointer;
   padding: 10px;
   margin-left: auto;
 `
 
-const Content = styled(Div)`
+const Content = styled.div`
   max-width: 1000px;
   width: 100%;
   height: 100px;
@@ -52,5 +54,5 @@ const Content = styled(Div)`
   top: 0;
   left: 0;
   right: 0;
-  z-index: 999;
+  background: transparent;
 `

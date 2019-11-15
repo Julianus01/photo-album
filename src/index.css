@@ -7,6 +7,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
+  overflow: hidden;
 }
 
 html,
@@ -19,6 +20,7 @@ body {
 
 .ReactModal__Overlay {
   background-color: transparent !important;
+  z-index: 999;
 }
 
 /* code {

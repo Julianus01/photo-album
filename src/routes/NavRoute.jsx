@@ -4,16 +4,14 @@ import { Div } from 'styled'
 import styled from 'styled-components'
 import { Route } from 'react-router-dom'
 
-const NavRoute = props => {
-  return (
-    <Page>
-      <Navbar />
-      <Content>
-        <Route {...props} />
-      </Content>
-    </Page>
-  )
-}
+const NavRoute = props => (
+  <Page>
+    <Navbar />
+    <Content>
+      <Route {...props} />
+    </Content>
+  </Page>
+)
 
 export default NavRoute
 
@@ -24,6 +22,7 @@ const Page = styled(Div)`
   flex-direction: column;
   padding-left: 20px;
   padding-right: 20px;
+  overflow: auto;
 `
 
 const Content = styled(Div)`
