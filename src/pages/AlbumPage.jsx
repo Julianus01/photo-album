@@ -3,10 +3,21 @@ import AlbumEndpoints from '../api/AlbumEndpoints'
 import styled from 'styled-components'
 import { Div, Title, Button } from 'styled'
 import { Link } from 'react-router-dom'
+import { useDropArea } from 'react-use'
+import NoPhotos from './album/NoPhotos'
+import AddPhotoModal from './album/AddPhotoModal'
 
 const AlbumPage = ({ match }) => {
   const [loading, setLoading] = useState(true)
   const [album, setAlbum] = useState(null)
+  const [dragFile, setDragFile] = useState(null)
+  const [addPhotoModal, setAddPhotoModal] = useState(false)
+  const [bond] = useDropArea({
+    onFiles: ([file]) => {
+      setAddPhotoModal(true)
+      setDragFile(file)
+    }
+  })
 
   useEffect(() => {
     AlbumEndpoints.getAlbum(match.params.name).then(result => {
@@ -35,8 +46,18 @@ const AlbumPage = ({ match }) => {
           </Actions>
         </Header>
 
-        <Content>test</Content>
+        <Content>
+          <div style={{ width: '100%' }} {...bond}>
+            <NoPhotos onBrowse={() => setAddPhotoModal(true)} />
+          </div>
+        </Content>
       </Container>
+
+      <AddPhotoModal
+        dragFile={dragFile}
+        onClose={() => setAddPhotoModal(false)}
+        isOpen={addPhotoModal}
+      />
     </Page>
   )
 }
@@ -80,8 +101,9 @@ const Actions = styled(Div)`
 `
 
 const Content = styled(Div)`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  /* display: grid; */
+  /* grid-template-columns: 1fr 1fr 1fr; */
+  display: flex;
   grid-gap: 40px;
   margin-bottom: 200px;
 `

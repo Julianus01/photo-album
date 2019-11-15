@@ -61,6 +61,14 @@ export const Button = styled.button`
       box-shadow: none;
       pointer-events: none;
     `}
+
+  ${({ flat, theme }) =>
+    flat &&
+    css`
+      background-color: transparent;
+      color: ${theme.primary_blue};
+      box-shadow: none;
+    `}
 `
 
 const InputContainer = styled.div`

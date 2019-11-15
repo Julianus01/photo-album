@@ -1,25 +1,11 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Div, Text } from 'styled'
-import { Image as ImageIcon, Delete as DeleteIcon, Edit2 as EditIcon } from 'react-feather'
+import { Delete as DeleteIcon, Edit2 as EditIcon } from 'react-feather'
 import DeleteModal from 'shared/DeleteModal'
 import AlbumEndpoints from '../../api/AlbumEndpoints'
 import EditAlbumModal from './EditAlbumModal'
-
-const NoPhotos = () => (
-  <NoPhotosContainer>
-    <ImageIcon />
-  </NoPhotosContainer>
-)
-
-const NoPhotosContainer = styled(Div)`
-  background-color: ${({ theme }) => theme.neutral};
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
+import NoPhoto from './NoPhoto'
 
 const Album = ({ album, onAlbumDeleted, onAlbumUpdated, ...rest }) => {
   const [deleteModal, setDeleteModal] = useState(false)
@@ -39,7 +25,7 @@ const Album = ({ album, onAlbumDeleted, onAlbumUpdated, ...rest }) => {
           height: 300
         }}
       >
-        {!album.photos ? <NoPhotos /> : <div>photos</div>}
+        {!album.photos ? <NoPhoto /> : <div>photos</div>}
       </div>
 
       <Description onClick={event => event.stopPropagation()}>

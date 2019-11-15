@@ -17,7 +17,7 @@ const EditAlbumModal = ({ isOpen, onClose, album, onUpdate }) => {
       setLoading(true)
       const updatedAlbum = { ...album, name: albumName }
       await AlbumEndpoints.updateAlbum(album.id, updatedAlbum)
-      onUpdate(updatedAlbum)
+      onUpdate && onUpdate(updatedAlbum)
       setLoading(false)
       closeModal()
     } catch (error) {
