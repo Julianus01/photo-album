@@ -105,7 +105,13 @@ const addPhoto = async (albumId, photoName, photoFile) => {
     .doc()
 
   const src = await uploadPhoto(albumId, doc.id, photoFile)
-  const photoObject = { name: photoName, src, id: doc.id, dateCreated: Date.now() }
+  const photoObject = {
+    name: photoName,
+    src,
+    id: doc.id,
+    size: photoFile.size,
+    dateCreated: Date.now()
+  }
   await doc.set(photoObject)
 
   return photoObject

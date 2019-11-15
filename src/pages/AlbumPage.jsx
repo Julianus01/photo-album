@@ -88,7 +88,11 @@ const AlbumPage = ({ match }) => {
               <Content viewOption={viewOption}>
                 {album.photos.map(photo => (
                   <Fade key={photo.id}>
-                    <Photo photo={photo} deleteClicked={stageForDeletion} />
+                    <Photo
+                      isListView={viewOption === 'list'}
+                      photo={photo}
+                      deleteClicked={stageForDeletion}
+                    />
                   </Fade>
                 ))}
               </Content>

@@ -1,13 +1,25 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { Div, Text } from 'styled'
 import { Delete as DeleteIcon } from 'react-feather'
+import fp from 'lodash/fp'
 
-const Photo = ({ photo, deleteClicked }) => {
+const readableBytes = bytes => {
+  if (!bytes) return
+  const i = Math.floor(Math.log(bytes) / Math.log(1024)),
+    sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+
+  return (bytes / Math.pow(1024, i)).toFixed(2) * 1 + ' ' + sizes[i]
+}
+
+const Photo = ({ photo, deleteClicked, isListView }) => {
   return (
     <Container>
       <Absolute>
-        <Name>{photo.name}</Name>
+        <div>
+          <Name isListView={isListView}>{photo.name}</Name>
+          {isListView && <Text>{readableBytes(fp.getOr(0, 'size')(photo))}</Text>}
+        </div>
 
         <DeleteIcon onClick={() => deleteClicked(photo)} size={16} />
       </Absolute>
@@ -70,4 +82,11 @@ const Image = styled.img`
 const Name = styled(Text)`
   color: white;
   font-weight: bold;
+  margin-bottom: 5px;
+
+  ${({ isListView }) =>
+    isListView &&
+    css`
+      font-size: 30px;
+    `}
 `

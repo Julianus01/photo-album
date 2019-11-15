@@ -74,7 +74,7 @@ const AlbumsPage = ({ history }) => {
             <div>No albums</div>
           ) : (
             albums.map(album => (
-              <Fade key={album.id}>
+              <Fade bottom key={album.id}>
                 <Album
                   stageForEdit={stageForEdit}
                   stageForDeletion={stageForDeletion}
