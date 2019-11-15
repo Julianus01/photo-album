@@ -17,9 +17,8 @@ const EditAlbumModal = ({ isOpen, onClose, album, onUpdate }) => {
       setLoading(true)
       const updatedAlbum = { ...album, name: albumName }
       await AlbumEndpoints.updateAlbum(album.id, updatedAlbum)
-      onUpdate && onUpdate(updatedAlbum)
       setLoading(false)
-      closeModal()
+      onUpdate && onUpdate(updatedAlbum)
     } catch (error) {
       showError(error)
       setLoading(false)
@@ -36,6 +35,8 @@ const EditAlbumModal = ({ isOpen, onClose, album, onUpdate }) => {
       <Div onClick={event => event.stopPropagation()} box>
         <Content>
           <Input
+            style={{ width: '100%' }}
+            inputStyle={{ width: '100%' }}
             value={albumName}
             onChange={({ target: { value } }) => setAlbumName(value)}
             disabled={loading}

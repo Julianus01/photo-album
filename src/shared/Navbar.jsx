@@ -47,6 +47,7 @@ const IconContainer = styled.div`
 
 const Content = styled.div`
   max-width: 1000px;
+  padding: 0 20px;
   width: 100%;
   height: 100px;
   display: flex;

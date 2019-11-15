@@ -1,26 +1,24 @@
 import React, { useState } from 'react'
-import { Div, Button, Input, Text } from 'styled'
+import { Div, Button, Text, Input } from 'styled'
 import styled from 'styled-components'
-import AlbumEndpoints from 'api/AlbumEndpoints'
 import Modal from 'shared/Modal'
 import { useTemporaryMessage } from 'hooks'
+import AlbumEndpoints from 'api/AlbumEndpoints'
 
-const CreateAlbumModal = ({ isOpen, onClose, onSuccess }) => {
+const EditPhotoModal = ({ isOpen, onClose, photo, albumId, onUpdate }) => {
   const [errorMessage, showError, hideError] = useTemporaryMessage()
-  const [albumName, setAlbumName] = useState('')
   const [loading, setLoading] = useState(false)
+  const [photoName, setPhotoName] = useState(photo.name)
 
-  const createAlbum = async () => {
+  const saveAlbum = async () => {
     try {
       hideError()
 
       setLoading(true)
-      const newAlbum = await AlbumEndpoints.createAlbum(albumName)
+      const updatedAlbum = { ...photo, name: photoName }
+      await AlbumEndpoints.updatePhoto(albumId, photo.id, updatedAlbum)
       setLoading(false)
-
-      onSuccess(newAlbum)
-      setAlbumName('')
-      onClose()
+      onUpdate && onUpdate(updatedAlbum)
     } catch (error) {
       showError(error)
       setLoading(false)
@@ -28,28 +26,30 @@ const CreateAlbumModal = ({ isOpen, onClose, onSuccess }) => {
   }
 
   const closeModal = () => {
-    hideError()
-    setAlbumName('')
+    setPhotoName(photo.name)
     onClose()
   }
 
   return (
     <Modal isOpen={isOpen} onClose={closeModal}>
-      <Div box>
+      <Div onClick={event => event.stopPropagation()} box>
         <Content>
           <Input
             style={{ width: '100%' }}
             inputStyle={{ width: '100%' }}
-            value={albumName}
-            onChange={({ target: { value } }) => setAlbumName(value)}
+            value={photoName}
+            onChange={({ target: { value } }) => setPhotoName(value)}
             disabled={loading}
             placeholder='Album name'
-            onKeyPress={({ key }) => key === 'Enter' && createAlbum()}
+            onKeyPress={({ key }) => key === 'Enter' && saveAlbum()}
           />
 
-          <CreateButton onClick={createAlbum} disabled={albumName.length < 3 || loading}>
-            create
-          </CreateButton>
+          <EditButton
+            onClick={saveAlbum}
+            disabled={loading || photoName.length < 3 || photoName === photo.name}
+          >
+            save
+          </EditButton>
         </Content>
 
         {errorMessage && <Error>{errorMessage}</Error>}
@@ -58,10 +58,11 @@ const CreateAlbumModal = ({ isOpen, onClose, onSuccess }) => {
   )
 }
 
-export default CreateAlbumModal
+export default EditPhotoModal
 
 const Content = styled(Div).attrs({ box: true })`
   display: flex;
+  align-items: center;
 `
 
 const Error = styled(Text)`
@@ -69,7 +70,7 @@ const Error = styled(Text)`
   font-size: 14px;
 `
 
-const CreateButton = styled(Button)`
+const EditButton = styled(Button)`
   margin-left: auto;
   width: fit-content;
 `

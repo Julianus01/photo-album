@@ -28,7 +28,7 @@ const getAlbums = async () => {
   )
 }
 
-const getAlbum = async albumName => {
+const getAlbumByName = async albumName => {
   const albumSnapshot = await firebase
     .firestore()
     .collection(COLLECTION)
@@ -53,7 +53,7 @@ const getAlbum = async albumName => {
 }
 
 const createAlbum = async albumName => {
-  if (await getAlbum(albumName)) {
+  if (await getAlbumByName(albumName)) {
     return Promise.reject('An album with this name already exists!')
   }
 
@@ -69,7 +69,7 @@ const createAlbum = async albumName => {
 }
 
 const updateAlbum = async (albumId, album) => {
-  if (await getAlbum(album.name)) {
+  if (await getAlbumByName(album.name)) {
     return Promise.reject('An album with this name already exists!')
   }
 
@@ -117,6 +117,37 @@ const addPhoto = async (albumId, photoName, photoFile) => {
   return photoObject
 }
 
+const getPhotoByName = async (albumId, photoName) => {
+  const photoSnapshot = await firebase
+    .firestore()
+    .collection(COLLECTION)
+    .doc(albumId)
+    .collection(PHOTOS_COLLECTION)
+    .where('name', '==', photoName)
+    .get()
+
+  if (!photoSnapshot.docs.length) {
+    return null
+  }
+
+  const photo = photoSnapshot.docs[0].data()
+  return photo
+}
+
+const updatePhoto = async (albumId, photoId, photo) => {
+  if (await getPhotoByName(albumId, photo.name)) {
+    return Promise.reject('A photo with this name already exists!')
+  }
+
+  return firebase
+    .firestore()
+    .collection(COLLECTION)
+    .doc(albumId)
+    .collection(PHOTOS_COLLECTION)
+    .doc(photoId)
+    .set(photo, { merge: true })
+}
+
 const uploadPhoto = async (albumId, photoId, photoFile) => {
   const { ref } = await firebase
     .storage()
@@ -129,11 +160,12 @@ const uploadPhoto = async (albumId, photoId, photoFile) => {
 
 export default {
   getAlbums,
-  getAlbum,
+  getAlbumByName,
   createAlbum,
   updateAlbum,
   deleteAlbum,
 
   addPhoto,
-  deletePhoto
+  deletePhoto,
+  updatePhoto
 }

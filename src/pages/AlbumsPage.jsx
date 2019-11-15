@@ -52,12 +52,6 @@ const AlbumsPage = ({ history }) => {
 
   return (
     <Page>
-      <CreateAlbumModal
-        onSuccess={onAlbumCreated}
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-      />
-
       <Container>
         <Header>
           <Title style={{ marginBottom: 0 }}>My albums</Title>
@@ -88,14 +82,18 @@ const AlbumsPage = ({ history }) => {
         </Content>
       </Container>
 
-      {albumInStage && (
-        <DeleteModal
-          onDelete={onDelete}
-          message={`Delete album '${fp.get('name')(albumInStage)}'?`}
-          onClose={() => setDeleteModal(false)}
-          isOpen={deleteModal}
-        />
-      )}
+      <CreateAlbumModal
+        onSuccess={onAlbumCreated}
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+      />
+
+      <DeleteModal
+        onDelete={onDelete}
+        message={`Delete album '${fp.get('name')(albumInStage)}'?`}
+        onClose={() => setDeleteModal(false)}
+        isOpen={deleteModal}
+      />
 
       {albumInStage && (
         <EditAlbumModal

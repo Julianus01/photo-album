@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 import { Div, Text } from 'styled'
-import { Delete as DeleteIcon } from 'react-feather'
+import { Delete as DeleteIcon, Edit2 as EditIcon } from 'react-feather'
 import fp from 'lodash/fp'
 
 const readableBytes = bytes => {
@@ -12,7 +12,7 @@ const readableBytes = bytes => {
   return (bytes / Math.pow(1024, i)).toFixed(2) * 1 + ' ' + sizes[i]
 }
 
-const Photo = ({ photo, deleteClicked, isListView }) => {
+const Photo = ({ photo, stageForDeletion, stageForEdit, isListView }) => {
   return (
     <Container>
       <Absolute>
@@ -21,7 +21,10 @@ const Photo = ({ photo, deleteClicked, isListView }) => {
           {isListView && <Text>{readableBytes(fp.getOr(0, 'size')(photo))}</Text>}
         </div>
 
-        <DeleteIcon onClick={() => deleteClicked(photo)} size={16} />
+        <div style={{ marginLeft: 'auto' }}>
+          <EditIcon onClick={() => stageForEdit(photo)} size={16} style={{ marginRight: 20 }} />
+          <DeleteIcon onClick={() => stageForDeletion(photo)} size={16} />
+        </div>
       </Absolute>
 
       <Image src={photo.src} />

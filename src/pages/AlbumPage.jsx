@@ -11,14 +11,16 @@ import Photo from './album/Photo'
 import DeleteModal from 'shared/DeleteModal'
 import Fade from 'react-reveal/Fade'
 import { List as ListIcon, Grid as GridIcon } from 'react-feather'
+import EditPhotoModal from './album/EditPhotoModal'
 
 const AlbumPage = ({ match }) => {
   const [loading, setLoading] = useState(true)
   const [album, setAlbum] = useState(null)
   const [dragFile, setDragFile] = useState(null)
   const [addPhotoModal, setAddPhotoModal] = useState(false)
+  const [editModal, setEditModal] = useState(false)
   const [deleteModal, setDeleteModal] = useState(false)
-  const [photoToDelete, setPhotoToDelete] = useState(null)
+  const [photoInStage, setPhotoInStage] = useState(null)
   const [viewOption, setViewOption] = useState('grid')
 
   const [bond] = useDropArea({
@@ -29,7 +31,7 @@ const AlbumPage = ({ match }) => {
   })
 
   useEffect(() => {
-    AlbumEndpoints.getAlbum(match.params.name).then(result => {
+    AlbumEndpoints.getAlbumByName(match.params.name).then(result => {
       setAlbum(result)
       setLoading(false)
     })
@@ -38,14 +40,27 @@ const AlbumPage = ({ match }) => {
   const onAddedPhoto = photo => setAlbum({ ...album, photos: [photo, ...album.photos] })
 
   const stageForDeletion = photo => {
-    setPhotoToDelete(photo)
+    setPhotoInStage(photo)
     setDeleteModal(true)
   }
 
+  const stageForEdit = photo => {
+    setPhotoInStage(photo)
+    setEditModal(true)
+  }
+
   const onDeletePhoto = async () => {
-    await AlbumEndpoints.deletePhoto(album.id, photoToDelete.id)
-    setAlbum({ ...album, photos: album.photos.filter(({ id }) => id !== photoToDelete.id) })
-    setPhotoToDelete(null)
+    await AlbumEndpoints.deletePhoto(album.id, photoInStage.id)
+    setAlbum({ ...album, photos: album.photos.filter(({ id }) => id !== photoInStage.id) })
+    setPhotoInStage(null)
+  }
+
+  const onPhotoUpdated = updatedPhoto => {
+    setAlbum({
+      ...album,
+      photos: album.photos.map(photo => (photo.id === updatedPhoto.id ? updatedPhoto : photo))
+    })
+    setPhotoInStage(null)
   }
 
   const photos = fp.getOr([], 'photos')(album)
@@ -91,7 +106,8 @@ const AlbumPage = ({ match }) => {
                     <Photo
                       isListView={viewOption === 'list'}
                       photo={photo}
-                      deleteClicked={stageForDeletion}
+                      stageForDeletion={stageForDeletion}
+                      stageForEdit={stageForEdit}
                     />
                   </Fade>
                 ))}
@@ -111,10 +127,20 @@ const AlbumPage = ({ match }) => {
 
       <DeleteModal
         onDelete={onDeletePhoto}
-        message={`Delete photo '${fp.get('name')(photoToDelete)}'?`}
+        message={`Delete photo '${fp.get('name')(photoInStage)}'?`}
         onClose={() => setDeleteModal(false)}
         isOpen={deleteModal}
       />
+
+      {photoInStage && (
+        <EditPhotoModal
+          albumId={album.id}
+          onUpdate={onPhotoUpdated}
+          isOpen={editModal}
+          photo={photoInStage}
+          onClose={() => setEditModal(false)}
+        />
+      )}
     </Page>
   )
 }
