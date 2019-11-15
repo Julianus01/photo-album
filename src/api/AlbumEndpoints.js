@@ -1,9 +1,12 @@
 import firebase from 'firebase'
 
+const COLLECTION = 'albums'
+const PHOTOS_COLLECTION = 'photos'
+
 const getAlbums = async () => {
   const snapshot = await firebase
     .firestore()
-    .collection('albums')
+    .collection(COLLECTION)
     .orderBy('dateCreated', 'desc')
     .get()
 
@@ -11,17 +14,27 @@ const getAlbums = async () => {
 }
 
 const getAlbum = async albumName => {
-  const snapshot = await firebase
+  const albumSnapshot = await firebase
     .firestore()
-    .collection('albums')
+    .collection(COLLECTION)
     .where('name', '==', albumName)
     .get()
 
-  if (!snapshot.docs.length) {
+  if (!albumSnapshot.docs.length) {
     return null
   }
 
-  return snapshot.docs[0].data()
+  const album = albumSnapshot.docs[0].data()
+
+  const photosSnapshot = await firebase
+    .firestore()
+    .collection(COLLECTION)
+    .doc(album.id)
+    .collection(PHOTOS_COLLECTION)
+    .orderBy('dateCreated', 'desc')
+    .get()
+
+  return { ...album, photos: photosSnapshot.docs.map(doc => doc.data()) }
 }
 
 const createAlbum = async albumName => {
@@ -31,7 +44,7 @@ const createAlbum = async albumName => {
 
   const doc = await firebase
     .firestore()
-    .collection('albums')
+    .collection(COLLECTION)
     .doc()
 
   const newAlbum = { name: albumName, id: doc.id, dateCreated: new Date() }
@@ -43,21 +56,48 @@ const createAlbum = async albumName => {
 const updateAlbum = async (albumId, album) =>
   firebase
     .firestore()
-    .collection('albums')
+    .collection(COLLECTION)
     .doc(albumId)
     .set(album, { merge: true })
 
 const deleteAlbum = albumId =>
   firebase
     .firestore()
-    .collection('albums')
+    .collection(COLLECTION)
     .doc(albumId)
     .delete()
+
+const addPhoto = async (albumId, photoName, photoFile) => {
+  const doc = await firebase
+    .firestore()
+    .collection(COLLECTION)
+    .doc(albumId)
+    .collection(PHOTOS_COLLECTION)
+    .doc()
+
+  const src = await uploadPhoto(albumId, doc.id, photoFile)
+  const photoObject = { name: photoName, src, id: doc.id, dateCreated: Date.now() }
+  doc.set(photoObject)
+
+  return photoObject
+}
+
+const uploadPhoto = async (albumId, photoId, photoFile) => {
+  const { ref } = await firebase
+    .storage()
+    .ref()
+    .child(`${COLLECTION}/${albumId}/${photoId}`)
+    .put(photoFile)
+
+  return ref.getDownloadURL()
+}
 
 export default {
   getAlbums,
   getAlbum,
   createAlbum,
   updateAlbum,
-  deleteAlbum
+  deleteAlbum,
+
+  addPhoto
 }

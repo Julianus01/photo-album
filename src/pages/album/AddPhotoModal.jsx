@@ -4,8 +4,9 @@ import styled from 'styled-components'
 import Modal from 'shared/Modal'
 import { useTemporaryMessage } from 'hooks'
 import NoPhoto from './NoPhoto'
+import AlbumEndpoints from '../../api/AlbumEndpoints'
 
-const AddPhotoModal = ({ isOpen, onClose, dragFile, name }) => {
+const AddPhotoModal = ({ isOpen, onClose, dragFile, album }) => {
   const [errorMessage, showError, hideError] = useTemporaryMessage()
   const [loading, setLoading] = useState(false)
   const [photoName, setPhotoName] = useState('')
@@ -23,7 +24,12 @@ const AddPhotoModal = ({ isOpen, onClose, dragFile, name }) => {
     onClose()
   }
 
-  const addPhoto = async () => {}
+  const addPhoto = async () => {
+    const response = await AlbumEndpoints.addPhoto(album.id, photoName, photoFile)
+
+    console.log('RESPONSE')
+    console.log(response)
+  }
 
   return (
     <Modal contentStyle={{ maxWidth: 300 }} isOpen={isOpen} onClose={closeModal}>

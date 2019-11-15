@@ -32,5 +32,4 @@ const Content = styled(Div)`
   flex-direction: column;
   width: 100%;
   margin: 0 auto;
-  max-width: 1000px;
 `

@@ -4,10 +4,8 @@ import { Div, Title, Button } from 'styled'
 
 const NoPhotos = ({ onBrowse }) => (
   <NoPhotosContainer>
-    <Title>Drag&Drop image here or</Title>
-    <Button flat onClick={onBrowse}>
-      Browse
-    </Button>
+    <Description>Drag&Drop image here or</Description>
+    <Button onClick={onBrowse}>Browse</Button>
   </NoPhotosContainer>
 )
 
@@ -17,7 +15,12 @@ const NoPhotosContainer = styled(Div)`
   height: 500px;
   width: 100%;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
+`
+
+const Description = styled(Title)`
+  margin-bottom: 0;
+  margin-right: 20px;
+  text-decoration: underline;
 `

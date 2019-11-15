@@ -23,6 +23,7 @@ const AlbumPage = ({ match }) => {
     AlbumEndpoints.getAlbum(match.params.name).then(result => {
       setAlbum(result)
       setLoading(false)
+      console.log(result)
     })
   }, [match.params.name])
 
@@ -46,14 +47,15 @@ const AlbumPage = ({ match }) => {
           </Actions>
         </Header>
 
-        <Content>
-          <div style={{ width: '100%' }} {...bond}>
-            <NoPhotos onBrowse={() => setAddPhotoModal(true)} />
-          </div>
-        </Content>
+        {/* <Content> */}
+        <DropArea {...bond}>
+          <NoPhotos onBrowse={() => setAddPhotoModal(true)} />
+        </DropArea>
+        {/* </Content> */}
       </Container>
 
       <AddPhotoModal
+        album={album}
         dragFile={dragFile}
         onClose={() => setAddPhotoModal(false)}
         isOpen={addPhotoModal}
@@ -90,6 +92,8 @@ const Container = styled(Div)`
 
 const Header = styled(Div)`
   display: flex;
+  max-width: 1000px;
+  margin: 0 auto;
   margin-bottom: 30px;
 `
 
@@ -100,10 +104,15 @@ const Actions = styled(Div)`
   align-items: flex-end;
 `
 
+const DropArea = styled(Div)`
+  width: 100;
+`
+
 const Content = styled(Div)`
   /* display: grid; */
   /* grid-template-columns: 1fr 1fr 1fr; */
   display: flex;
   grid-gap: 40px;
   margin-bottom: 200px;
+  max-width: 1000px;
 `
