@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom'
 import { useDropArea } from 'react-use'
 import NoPhotos from './album/NoPhotos'
 import AddPhotoModal from './album/AddPhotoModal'
+import fp from 'lodash/fp'
+import Photo from './album/Photo'
 
 const AlbumPage = ({ match }) => {
   const [loading, setLoading] = useState(true)
@@ -29,6 +31,8 @@ const AlbumPage = ({ match }) => {
 
   const onAddedPhoto = photo => setAlbum({ ...album, photos: [photo, ...album.photos] })
 
+  const photos = fp.getOr('photos', [])(album)
+
   return (
     <Page>
       <Container>
@@ -43,30 +47,25 @@ const AlbumPage = ({ match }) => {
           </Div>
 
           <Actions>
-            <Button style={{ width: 'fit-content' }} onClick={null}>
+            <Button onClick={() => setAddPhotoModal(true)} style={{ width: 'fit-content' }}>
               add photo
             </Button>
           </Actions>
         </Header>
 
-        <DropArea {...bond}>
-          {album && album.photos && !album.photos.length && (
-            <NoPhotos onBrowse={() => setAddPhotoModal(true)} />
-          )}
+        {!loading && (
+          <DropArea {...bond}>
+            {!photos && <NoPhotos onBrowse={() => setAddPhotoModal(true)} />}
 
-          {album && album.photos && album.photos.length && (
-            <div>
-              {album.photos.map(photo => (
-                <img
-                  alt='test'
-                  key={photo.id}
-                  src={photo.src}
-                  style={{ width: 300, height: 300 }}
-                />
-              ))}
-            </div>
-          )}
-        </DropArea>
+            {photos && (
+              <Content>
+                {album.photos.map(photo => (
+                  <Photo key={photo.id} photo={photo} />
+                ))}
+              </Content>
+            )}
+          </DropArea>
+        )}
       </Container>
 
       <AddPhotoModal
@@ -125,10 +124,11 @@ const DropArea = styled(Div)`
 `
 
 const Content = styled(Div)`
-  /* display: grid; */
-  /* grid-template-columns: 1fr 1fr 1fr; */
-  display: flex;
-  grid-gap: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-auto-rows: 300px;
+  /* grid-gap: 40px; */
   margin-bottom: 200px;
   max-width: 1000px;
+  margin: 0 auto;
 `
