@@ -6,6 +6,7 @@ import DeleteModal from 'shared/DeleteModal'
 import AlbumEndpoints from '../../api/AlbumEndpoints'
 import EditAlbumModal from './EditAlbumModal'
 import NoPhoto from './NoPhoto'
+import AlbumThumbnail from './AlbumThumbnail'
 
 const Album = ({ album, onAlbumDeleted, onAlbumUpdated, ...rest }) => {
   const [deleteModal, setDeleteModal] = useState(false)
@@ -25,7 +26,7 @@ const Album = ({ album, onAlbumDeleted, onAlbumUpdated, ...rest }) => {
           height: 300
         }}
       >
-        {!album.photos ? <NoPhoto /> : <div>photos</div>}
+        {album && !album.photos.length ? <NoPhoto /> : <AlbumThumbnail photos={album.photos} />}
       </div>
 
       <Description onClick={event => event.stopPropagation()}>

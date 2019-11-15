@@ -19,6 +19,7 @@ const getAlbums = async () => {
         .collection(COLLECTION)
         .doc(album.id)
         .collection(PHOTOS_COLLECTION)
+        .orderBy('dateCreated', 'desc')
         .limit(4)
         .get()
         .then(snap => snap.docs.map(photos => photos.data()))
