@@ -25,13 +25,12 @@ const AlbumPage = ({ match }) => {
     AlbumEndpoints.getAlbum(match.params.name).then(result => {
       setAlbum(result)
       setLoading(false)
-      console.log(result)
     })
   }, [match.params.name])
 
   const onAddedPhoto = photo => setAlbum({ ...album, photos: [photo, ...album.photos] })
 
-  const photos = fp.getOr('photos', [])(album)
+  const photos = fp.getOr([], 'photos')(album)
 
   return (
     <Page>
@@ -46,18 +45,20 @@ const AlbumPage = ({ match }) => {
             </span>
           </Div>
 
-          <Actions>
-            <Button onClick={() => setAddPhotoModal(true)} style={{ width: 'fit-content' }}>
-              add photo
-            </Button>
-          </Actions>
+          {photos.length ? (
+            <Actions>
+              <Button onClick={() => setAddPhotoModal(true)} style={{ width: 'fit-content' }}>
+                add photo
+              </Button>
+            </Actions>
+          ) : null}
         </Header>
 
         {!loading && (
           <DropArea {...bond}>
-            {!photos && <NoPhotos onBrowse={() => setAddPhotoModal(true)} />}
-
-            {photos && (
+            {!photos.length ? (
+              <NoPhotos onBrowse={() => setAddPhotoModal(true)} />
+            ) : (
               <Content>
                 {album.photos.map(photo => (
                   <Photo key={photo.id} photo={photo} />
@@ -127,7 +128,6 @@ const Content = styled(Div)`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-auto-rows: 300px;
-  /* grid-gap: 40px; */
   margin-bottom: 200px;
   max-width: 1000px;
   margin: 0 auto;

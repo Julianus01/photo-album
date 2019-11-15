@@ -8,6 +8,7 @@ export const lightTheme = {
   disabled: 'rgba(0, 0, 0, 0.35)',
   neutral: '#f8f8f8',
   danger: '#f5222d',
+  photo_border: '#fff',
 
   // specific
   background: {
@@ -29,6 +30,7 @@ export const darkTheme = {
   disabled: 'rgba(0, 0, 0, 0.1)',
   neutral: '#1a1a1a',
   danger: '#f5222d',
+  photo_border: '#000',
 
   // specific
   background: {

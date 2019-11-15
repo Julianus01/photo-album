@@ -24,6 +24,7 @@ const Container = styled(Div)`
   height: 100%;
   position: relative;
   overflow: hidden;
+  border: ${({ theme }) => `4px solid ${theme.photo_border}`};
 
   :hover {
     img {
