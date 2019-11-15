@@ -22,5 +22,4 @@ const NoPhotosContainer = styled(Div)`
 const Description = styled(Title)`
   margin-bottom: 0;
   margin-right: 20px;
-  text-decoration: underline;
 `

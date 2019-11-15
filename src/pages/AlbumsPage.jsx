@@ -31,15 +31,22 @@ const AlbumsPage = ({ history }) => {
   const onDelete = async () => {
     await AlbumEndpoints.deleteAlbum(albumInStage.id)
     setAlbums(albums.filter(({ id }) => id !== albumInStage.id))
+    setAlbumInStage(null)
   }
 
   const onAlbumUpdated = updatedAlbum => {
     setAlbums(albums.map(album => (album.id === updatedAlbum.id ? updatedAlbum : album)))
+    setAlbumInStage(null)
   }
 
   const stageForDeletion = album => {
     setAlbumInStage(album)
     setDeleteModal(true)
+  }
+
+  const stageForEdit = album => {
+    setAlbumInStage(album)
+    setEditModal(true)
   }
 
   return (
@@ -68,9 +75,10 @@ const AlbumsPage = ({ history }) => {
             albums.map(album => (
               <Fade key={album.id}>
                 <Album
+                  stageForEdit={stageForEdit}
                   stageForDeletion={stageForDeletion}
                   onClick={() => history.push(`albums/${album.name}`)}
-                  style={{ marginBottom: 60, cursor: 'pointer' }}
+                  style={{ cursor: 'pointer' }}
                   album={album}
                 />
               </Fade>
@@ -79,12 +87,14 @@ const AlbumsPage = ({ history }) => {
         </Content>
       </Container>
 
-      <DeleteModal
-        onDelete={onDelete}
-        message={`Delete album '${fp.get('name')(albumInStage)}'?`}
-        onClose={() => setDeleteModal(false)}
-        isOpen={deleteModal}
-      />
+      {albumInStage && (
+        <DeleteModal
+          onDelete={onDelete}
+          message={`Delete album '${fp.get('name')(albumInStage)}'?`}
+          onClose={() => setDeleteModal(false)}
+          isOpen={deleteModal}
+        />
+      )}
 
       {albumInStage && (
         <EditAlbumModal

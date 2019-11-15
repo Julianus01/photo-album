@@ -32,4 +32,5 @@ const Content = styled(Div)`
   flex-direction: column;
   width: 100%;
   margin: 0 auto;
+  margin-top: 100px;
 `

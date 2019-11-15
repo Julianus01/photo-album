@@ -12,11 +12,13 @@ const Navbar = () => {
 
   return (
     <Container>
-      <Text style={{ fontWeight: 'bold' }}>albump.</Text>
+      <Content>
+        <Text style={{ fontWeight: 'bold' }}>albump.</Text>
 
-      <IconContainer onClick={() => triggerTheme()} style={{ padding: 8 }}>
-        {theme.name === 'light' ? <Sun /> : <Moon />}
-      </IconContainer>
+        <IconContainer onClick={() => triggerTheme()} style={{ padding: 8 }}>
+          {theme.name === 'light' ? <Sun /> : <Moon />}
+        </IconContainer>
+      </Content>
     </Container>
   )
 }
@@ -24,16 +26,31 @@ const Navbar = () => {
 export default Navbar
 
 const Container = styled(Div)`
-  max-width: 1000px;
   width: 100%;
-  margin: 0 auto;
-  height: 100px;
   display: flex;
   align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
 `
 
 const IconContainer = styled(Div)`
   cursor: pointer;
   padding: 10px;
   margin-left: auto;
+`
+
+const Content = styled(Div)`
+  max-width: 1000px;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
 `

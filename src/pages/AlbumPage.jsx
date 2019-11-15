@@ -71,8 +71,8 @@ const AlbumPage = ({ match }) => {
             ) : (
               <Content>
                 {album.photos.map(photo => (
-                  <Fade>
-                    <Photo key={photo.id} photo={photo} deleteClicked={stageForDeletion} />
+                  <Fade key={photo.id}>
+                    <Photo photo={photo} deleteClicked={stageForDeletion} />
                   </Fade>
                 ))}
               </Content>
@@ -140,14 +140,17 @@ const Actions = styled(Div)`
 `
 
 const DropArea = styled(Div)`
-  width: 100;
+  width: 100%;
+  min-height: 75vh;
+  min-height: calc(var(--vh, 1vh) * 75);
+  padding-bottom: 200px;
 `
 
 const Content = styled(Div)`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-auto-rows: 300px;
-  margin-bottom: 200px;
   max-width: 1000px;
   margin: 0 auto;
+  grid-gap: 4px;
 `
