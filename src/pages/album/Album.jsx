@@ -18,9 +18,9 @@ const NoPhotosContainer = styled(Div)`
   justify-content: center;
 `
 
-const Album = ({ album, style }) => {
+const Album = ({ album, ...rest }) => {
   return (
-    <Container style={style}>
+    <Container {...rest}>
       <div
         style={{
           flex: 1,

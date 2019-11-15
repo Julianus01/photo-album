@@ -25,8 +25,14 @@ const CreateAlbumModal = ({ isOpen, onClose, onSuccess }) => {
     }
   }
 
+  const closeModal = () => {
+    hideError()
+    setAlbumName('')
+    onClose()
+  }
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={closeModal}>
       <Div box>
         <Content>
           <Input

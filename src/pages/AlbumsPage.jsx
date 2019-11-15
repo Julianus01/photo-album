@@ -5,7 +5,7 @@ import AlbumEndpoints from 'api/AlbumEndpoints'
 import CreateAlbumModal from './album/CreateAlbumModal'
 import Album from './album/Album'
 
-const AlbumsPage = () => {
+const AlbumsPage = ({ history }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [loading, setLoading] = useState(true)
   const [albums, setAlbums] = useState([])
@@ -21,6 +21,8 @@ const AlbumsPage = () => {
     setAlbums([newAlbum, ...albums])
   }
 
+  const onAlbumClicked = albumName => history.push(`albums/${albumName}`)
+
   return (
     <Page>
       <CreateAlbumModal
@@ -34,7 +36,9 @@ const AlbumsPage = () => {
           <Title style={{ marginBottom: 0 }}>My albums</Title>
 
           <Actions>
-            <Button onClick={() => setIsOpen(true)}>new album</Button>
+            <Button style={{ width: 'fit-content' }} onClick={() => setIsOpen(true)}>
+              new album
+            </Button>
           </Actions>
         </Header>
 
@@ -42,7 +46,14 @@ const AlbumsPage = () => {
           {loading ? null : !albums.length ? (
             <div>No albums</div>
           ) : (
-            albums.map(album => <Album style={{ marginBottom: 60 }} key={album.id} album={album} />)
+            albums.map(album => (
+              <Album
+                onClick={() => onAlbumClicked(album.name)}
+                style={{ marginBottom: 60, cursor: 'pointer' }}
+                key={album.id}
+                album={album}
+              />
+            ))
           )}
         </Content>
       </Container>
@@ -62,7 +73,6 @@ const Page = styled(Div)`
 `
 
 const Container = styled(Div)`
-  max-width: 1000px;
   width: 100%;
   margin: 0 auto;
 `

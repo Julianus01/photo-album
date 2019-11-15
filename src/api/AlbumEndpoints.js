@@ -10,14 +10,18 @@ const getAlbums = async () => {
   return snapshot.docs.map(doc => doc.data())
 }
 
-const createAlbum = async albumName => {
-  const album = await firebase
+const getAlbum = async albumName => {
+  const snapshot = await firebase
     .firestore()
     .collection('albums')
     .where('name', '==', albumName)
     .get()
 
-  if (album.docs.length) {
+  return snapshot.docs[0].data()
+}
+
+const createAlbum = async albumName => {
+  if (await getAlbum(albumName)) {
     return Promise.reject('A project with this name already exists!')
   }
 
@@ -34,5 +38,6 @@ const createAlbum = async albumName => {
 
 export default {
   getAlbums,
+  getAlbum,
   createAlbum
 }
