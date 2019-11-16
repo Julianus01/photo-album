@@ -52,7 +52,6 @@ const AlbumPage = ({ match }) => {
   }
 
   const stageForPreview = photo => {
-    console.log(photo)
     setPhotoInStage(photo)
     setPhotoPreview(true)
   }
