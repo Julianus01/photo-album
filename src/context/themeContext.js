@@ -1,10 +1,11 @@
 import React, { createContext, useState } from 'react'
 import { lightTheme, darkTheme } from 'theme'
+import fp from 'lodash/fp'
 
 const getTheme = () => {
   const localStorageTheme = JSON.parse(localStorage.getItem('theme'))
 
-  if (localStorageTheme.name === 'light') {
+  if (fp.get('name')(localStorageTheme) === 'light') {
     document.body.style = 'background: white;'
   } else {
     document.body.style = 'background: black;'
@@ -20,7 +21,7 @@ const ThemeContextProvider = ({ children }) => {
   const [theme, setTheme] = useState(getTheme())
 
   const triggerTheme = () => {
-    if (theme.name === 'light') {
+    if (fp.get('name')(theme) === 'light') {
       setTheme(darkTheme)
       localStorage.setItem('theme', JSON.stringify(darkTheme))
       return
