@@ -40,6 +40,7 @@ const Container = styled(Div)`
       return css`
         grid-template-rows: 1fr 1fr;
         grid-template-columns: 1fr 1fr;
+        grid-gap: 4px;
       `
     }
   }}
