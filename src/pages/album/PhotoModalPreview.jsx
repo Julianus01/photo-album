@@ -4,11 +4,13 @@ import Modal from 'shared/Modal'
 import { Subtitle, Title } from 'styled'
 import ThemeContext from 'context/themeContext'
 import { X as XIcon } from 'react-feather'
+import { useKey } from 'react-use'
 
 const PhotoModalPreview = ({ isOpen, onClose, src }) => {
   const { theme } = useContext(ThemeContext)
   const canvas = useRef(null)
   const [color, setColor] = useState(theme.background.primary)
+  useKey('Escape', onClose)
 
   useEffect(() => {
     const canvasRef = canvas

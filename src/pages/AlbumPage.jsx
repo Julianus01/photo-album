@@ -129,7 +129,10 @@ const AlbumPage = ({ match }) => {
         onSuccess={onAddedPhoto}
         album={album}
         dragFile={dragFile}
-        onClose={() => setAddPhotoModal(false)}
+        onClose={() => {
+          setPhotoInStage(null)
+          setAddPhotoModal(false)
+        }}
         isOpen={addPhotoModal}
       />
 
@@ -146,7 +149,10 @@ const AlbumPage = ({ match }) => {
           onUpdate={onPhotoUpdated}
           isOpen={editModal}
           photo={photoInStage}
-          onClose={() => setEditModal(false)}
+          onClose={() => {
+            setPhotoInStage(null)
+            setEditModal(false)
+          }}
         />
       )}
 

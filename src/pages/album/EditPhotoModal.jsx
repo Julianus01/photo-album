@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Div, Button, Text, Input } from 'styled'
 import styled from 'styled-components'
 import Modal from 'shared/Modal'
@@ -9,6 +9,10 @@ const EditPhotoModal = ({ isOpen, onClose, photo, albumId, onUpdate }) => {
   const [errorMessage, showError, hideError] = useTemporaryMessage()
   const [loading, setLoading] = useState(false)
   const [photoName, setPhotoName] = useState(photo.name)
+
+  useEffect(() => {
+    setPhotoName(photo.name)
+  }, [photo])
 
   const saveAlbum = async () => {
     try {

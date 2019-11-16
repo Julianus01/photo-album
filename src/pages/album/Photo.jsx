@@ -13,6 +13,11 @@ const readableBytes = bytes => {
 }
 
 const Photo = ({ photo, stageForDeletion, stageForEdit, stageForPreview, isListView }) => {
+  const stopPropagationCallback = callback => event => {
+    event.stopPropagation()
+    callback()
+  }
+
   return (
     <Container onClick={() => stageForPreview(photo)}>
       <Absolute>
@@ -24,8 +29,12 @@ const Photo = ({ photo, stageForDeletion, stageForEdit, stageForPreview, isListV
         </div>
 
         <div style={{ marginLeft: 'auto' }}>
-          <EditIcon onClick={() => stageForEdit(photo)} size={16} style={{ marginRight: 20 }} />
-          <DeleteIcon onClick={() => stageForDeletion(photo)} size={16} />
+          <EditIcon
+            onClick={stopPropagationCallback(() => stageForEdit(photo))}
+            size={16}
+            style={{ marginRight: 20 }}
+          />
+          <DeleteIcon onClick={stopPropagationCallback(() => stageForDeletion(photo))} size={16} />
         </div>
       </Absolute>
 
