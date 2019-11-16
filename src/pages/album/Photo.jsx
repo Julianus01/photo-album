@@ -21,14 +21,14 @@ const Photo = ({ photo, stageForDeletion, stageForEdit, stageForPreview, isListV
   return (
     <Container onClick={() => stageForPreview(photo)}>
       <Absolute>
-        <div>
+        <div style={{ flex: 1 }}>
           <Name isListView={isListView}>{photo.name}</Name>
           {isListView && (
             <Text style={{ color: 'white' }}>{readableBytes(fp.getOr(0, 'size')(photo))}</Text>
           )}
         </div>
 
-        <div style={{ marginLeft: 'auto' }}>
+        <div>
           <EditIcon
             onClick={stopPropagationCallback(() => stageForEdit(photo))}
             size={16}

@@ -5,6 +5,7 @@ import Modal from 'shared/Modal'
 import { useTemporaryMessage } from 'hooks'
 import NoPhoto from './NoPhoto'
 import AlbumEndpoints from '../../api/AlbumEndpoints'
+import IosSpinner from '../../shared/IosSpinner'
 
 const AddPhotoModal = ({ isOpen, onClose, dragFile, album, onSuccess }) => {
   const [errorMessage, showError, hideError] = useTemporaryMessage()
@@ -40,18 +41,12 @@ const AddPhotoModal = ({ isOpen, onClose, dragFile, album, onSuccess }) => {
     }
   }
 
+  const showButton = photoName.length >= 3 && photoFile
+
   return (
     <Modal contentStyle={{ maxWidth: 300 }} isOpen={isOpen} onClose={closeModal}>
       <Div onClick={event => event.stopPropagation()} box>
         <Content>
-          <Input
-            value={photoName}
-            onChange={({ target: { value } }) => setPhotoName(value)}
-            disabled={loading}
-            placeholder='Photo name'
-            onKeyPress={({ key }) => key === 'Enter' && addPhoto()}
-          />
-
           <PhotoContainer>
             {!photoFile && (
               <Absolute>
@@ -63,10 +58,21 @@ const AddPhotoModal = ({ isOpen, onClose, dragFile, album, onSuccess }) => {
             {photoFile && <ImgPreview src={URL.createObjectURL(photoFile)} />}
           </PhotoContainer>
 
+          <Input
+            style={{ marginBottom: 40 }}
+            value={photoName}
+            onChange={({ target: { value } }) => setPhotoName(value)}
+            disabled={loading}
+            placeholder='Photo name'
+            onKeyPress={({ key }) => key === 'Enter' && addPhoto()}
+          />
+
           {errorMessage && <Error>{errorMessage}</Error>}
-          <AddButton onClick={addPhoto} disabled={loading || photoName.length < 3 || !photoFile}>
-            add photo
-          </AddButton>
+          {showButton && (
+            <AddButton onClick={addPhoto} disabled={loading || photoName.length < 3 || !photoFile}>
+              {loading ? <IosSpinner /> : 'add photo'}
+            </AddButton>
+          )}
         </Content>
       </Div>
     </Modal>
@@ -93,7 +99,7 @@ const AddButton = styled(Button)`
 
 const PhotoContainer = styled(Div).attrs({ box: true })`
   min-height: 200px;
-  margin: 20px 0;
+  margin-bottom: 20px;
   position: relative;
   display: flex;
 `
