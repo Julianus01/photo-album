@@ -198,6 +198,7 @@ const Header = styled(Div)`
   max-width: 1000px;
   margin: 0 auto;
   margin-bottom: 30px;
+  flex-wrap: wrap;
 `
 
 const Actions = styled(Div)`
@@ -226,6 +227,11 @@ const Content = styled(Div)`
         grid-template-columns: 500px;
         grid-auto-rows: 500px;
         justify-content: center;
+
+        @media (max-width: 700px) {
+          grid-template-columns: 1fr;
+          grid-auto-rows: auto;
+        }
       `
     }
 
@@ -236,6 +242,10 @@ const Content = styled(Div)`
 
         @media (max-width: 900px) {
           grid-template-columns: 1fr 1fr;
+        }
+
+        @media (max-width: 700px) {
+          grid-auto-rows: auto;
         }
       `
     }
