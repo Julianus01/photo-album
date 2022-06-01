@@ -42,23 +42,23 @@ const AddPhotoModal = ({ isOpen, onClose, dragFile, album, onSuccess }) => {
 
   return (
     <Modal contentStyle={{ maxWidth: 300 }} isOpen={isOpen} onClose={closeModal}>
-      <Div onClick={event => event.stopPropagation()} box>
+      <Div onClick={(event) => event.stopPropagation()} box>
         <Content>
           <Input
             value={photoName}
             onChange={({ target: { value } }) => setPhotoName(value)}
             disabled={loading}
-            placeholder='Photo name'
+            placeholder="Photo name"
             onKeyPress={({ key }) => key === 'Enter' && addPhoto()}
           />
 
           <PhotoContainer>
             {!photoFile && (
               <Absolute>
-                <NoPhoto border text='Browse an image' />
+                <NoPhoto border text="Browse an image" />
               </Absolute>
             )}
-            <ImgInput type='file' onChange={onSelectedPhoto} />
+            <ImgInput type="file" onChange={onSelectedPhoto} />
 
             {photoFile && <ImgPreview src={URL.createObjectURL(photoFile)} />}
           </PhotoContainer>

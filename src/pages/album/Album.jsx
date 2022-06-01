@@ -26,9 +26,6 @@ const Album = ({ album, stageForDeletion, stageForEdit, ...rest }) => (
 export default Album
 
 const Container = styled(Div)`
-  display: flex;
-  flex-direction: column;
-
   svg {
     opacity: 0;
   }

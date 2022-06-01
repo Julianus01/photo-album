@@ -22,7 +22,7 @@ const PhotoModalPreview = ({ isOpen, onClose, src }) => {
 
       canvasRef.current.addEventListener(
         'mousemove',
-        function(e) {
+        function (e) {
           let eventLocation = getEventLocation(this, e)
           let context = this.getContext('2d')
           let pixelData = context.getImageData(eventLocation.x, eventLocation.y, 1, 1).data
@@ -47,12 +47,12 @@ const PhotoModalPreview = ({ isOpen, onClose, src }) => {
         width: '100%',
         maxWidth: '100%',
         backgroundColor:
-          theme.name === 'light' ? 'rgba(255, 255, 255, 0.98)' : 'rgba(0, 0, 0, 0.88)'
+          theme.name === 'light' ? 'rgba(255, 255, 255, 0.98)' : 'rgba(0, 0, 0, 0.88)',
       }}
       isOpen={isOpen}
       onClose={onClose}
     >
-      <Container onClick={event => event.stopPropagation()}>
+      <Container onClick={(event) => event.stopPropagation()}>
         <Header>
           <XIcon style={{ cursor: 'pointer' }} onClick={onClose} size={30} />
         </Header>
@@ -151,7 +151,7 @@ function getEventLocation(element, event) {
 
   return {
     x: event.pageX - pos.x,
-    y: event.pageY - pos.y
+    y: event.pageY - pos.y,
   }
 }
 
@@ -164,7 +164,7 @@ function drawImageFromWebUrl(sourceurl, canvas) {
   let img = new Image()
   img.crossOrigin = 'Anonymous'
 
-  img.addEventListener('load', function() {
+  img.addEventListener('load', function () {
     let scale = Math.min(canvas.width / img.width, canvas.height / img.height)
     // get the top left position of the image
     let x = canvas.width / 2 - (img.width / 2) * scale
@@ -173,6 +173,7 @@ function drawImageFromWebUrl(sourceurl, canvas) {
     // canvas
     //   .getContext('2d')
     //   .drawImage(img, 0, 0, img.width, img.height, 0, 0, canvas.width, canvas.height)
+    console.log('Draw')
     canvas.getContext('2d').drawImage(img, x, y, img.width * scale, img.height * scale)
   })
 

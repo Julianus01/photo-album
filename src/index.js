@@ -5,11 +5,13 @@ import App from './App'
 import * as serviceWorker from './serviceWorker'
 import { ThemeProvider as StyledThemeProvider } from 'styled-components'
 import { ThemeContextConsumer, ThemeContextProvider } from 'context/themeContext'
-import './fb_config'
+import { initFirebase } from './fb_config'
 import { BrowserRouter as Router } from 'react-router-dom'
 
 const vh = window.innerHeight * 0.01
 document.documentElement.style.setProperty('--vh', `${vh}px`)
+
+initFirebase()
 
 const RootHTML = () => {
   return (

@@ -29,29 +29,29 @@ const AlbumPage = ({ match }) => {
     onFiles: ([file]) => {
       setAddPhotoModal(true)
       setDragFile(file)
-    }
+    },
   })
 
   useEffect(() => {
-    AlbumEndpoints.getAlbumByName(match.params.name).then(result => {
+    AlbumEndpoints.getAlbumByName(match.params.name).then((result) => {
       setAlbum(result)
       setLoading(false)
     })
   }, [match.params.name])
 
-  const onAddedPhoto = photo => setAlbum({ ...album, photos: [photo, ...album.photos] })
+  const onAddedPhoto = (photo) => setAlbum({ ...album, photos: [photo, ...album.photos] })
 
-  const stageForDeletion = photo => {
+  const stageForDeletion = (photo) => {
     setPhotoInStage(photo)
     setDeleteModal(true)
   }
 
-  const stageForEdit = photo => {
+  const stageForEdit = (photo) => {
     setPhotoInStage(photo)
     setEditModal(true)
   }
 
-  const stageForPreview = photo => {
+  const stageForPreview = (photo) => {
     setPhotoInStage(photo)
     setPhotoPreview(true)
   }
@@ -62,10 +62,10 @@ const AlbumPage = ({ match }) => {
     setPhotoInStage(null)
   }
 
-  const onPhotoUpdated = updatedPhoto => {
+  const onPhotoUpdated = (updatedPhoto) => {
     setAlbum({
       ...album,
-      photos: album.photos.map(photo => (photo.id === updatedPhoto.id ? updatedPhoto : photo))
+      photos: album.photos.map((photo) => (photo.id === updatedPhoto.id ? updatedPhoto : photo)),
     })
     setPhotoInStage(null)
   }
@@ -77,7 +77,7 @@ const AlbumPage = ({ match }) => {
       <Container>
         <Header>
           <Div style={{ display: 'flex' }}>
-            <Href to='/albums'>
+            <Href to="/albums">
               <Title style={{ marginBottom: 0 }}>My albums </Title>
             </Href>
             <span>
@@ -108,7 +108,7 @@ const AlbumPage = ({ match }) => {
               <NoPhotos onBrowse={() => setAddPhotoModal(true)} />
             ) : (
               <Content viewOption={viewOption}>
-                {album.photos.map(photo => (
+                {album.photos.map((photo) => (
                   <Fade key={photo.id}>
                     <Photo
                       isListView={viewOption === 'list'}
