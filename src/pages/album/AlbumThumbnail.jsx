@@ -9,7 +9,7 @@ const AlbumThumbnail = ({ photos }) => {
     <Container elements={photos.length}>
       <Absolute />
 
-      {photosToDisplay.map(photo => (
+      {photosToDisplay.map((photo) => (
         <div key={photo.id} style={{ overflow: 'hidden' }}>
           <Image src={photo.src} />
         </div>
@@ -48,7 +48,7 @@ const Container = styled(Div)`
 
 const Image = styled.img`
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
 
   transition: transform 0.13s linear;
