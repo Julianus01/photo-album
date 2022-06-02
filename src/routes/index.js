@@ -12,10 +12,11 @@ import NavRoute from './NavRoute'
 
 const Routes = () => (
   <Switch>
-    <NavRoute path='/' exact={true} component={() => <Redirect to='/albums' />} />
-    <NavRoute path='/albums' exact={true} component={AlbumsPage} />
-    <NavRoute path='/albums/:name' exact={true} component={AlbumPage} />
-    <Route path='*' exact={true} component={NotFoundPage} />
+    <NavRoute path="/" exact={true} component={() => <Redirect to="/albums" />} />
+    <NavRoute path="/albums" exact={true} component={AlbumsPage} />
+    <NavRoute path="/albums/:name" exact={true} component={AlbumPage} />
+
+    <Route path="*" exact={true} component={NotFoundPage} />
   </Switch>
 )
 
